@@ -1,18 +1,18 @@
 ﻿using System;
-using System.IO;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace MakeNews
 {
-	public partial class AddItemPage:Form
+	public partial class AddItemPage: Form
 	{
 		DataManger dm;
-		
+
 		#region Form Event 부
 		public AddItemPage(DataManger _dm)
 		{
 			InitializeComponent();
-			Font = Common.GetFont();
+			dm = _dm;
 
 			Tb_Emogi.Enabled = true;
 			Tb_imgsrc.Enabled = false;
@@ -21,8 +21,7 @@ namespace MakeNews
 			Tb_PoupImgPath.Enabled = false;
 			Bt_CopyContent.Enabled = false;
 
-			dm = _dm;
-		} 
+		}
 
 
 		private void Bt_CopyContent_Click(object sender, EventArgs e)
@@ -79,17 +78,17 @@ namespace MakeNews
 			}
 		}
 
-		public string TextEmtyCheck(bool emogi, bool titile,bool content, bool url, bool imgsrc, bool catagory, bool year, bool mount, bool day,bool popuptitile, bool popupImgSrc, bool popupContent) 
+		public string TextEmtyCheck(bool emogi, bool titile, bool content, bool url, bool imgsrc, bool catagory, bool year, bool mount, bool day, bool popuptitile, bool popupImgSrc, bool popupContent)
 		{
 			string message = "";
-			
-			if (emogi) 
+
+			if (emogi)
 			{
-				if (Tb_Emogi.Text == string.Empty) 
+				if (Tb_Emogi.Text == string.Empty)
 				{
 					message += "이모지 항목 X\n";
 				}
-				
+
 				//if (Tb_Emogi.Text.Length != 1)
 				//{
 				//	message += "이모지 너무김 X\n";
@@ -139,8 +138,8 @@ namespace MakeNews
 				{
 					message += "년 항목 X\n";
 				}
-				
-				if (!int.TryParse(Tb_year.Text,out int a))
+
+				if (!int.TryParse(Tb_year.Text, out int a))
 				{
 					message += "년 항목 숫자입력\n";
 				}
@@ -191,7 +190,7 @@ namespace MakeNews
 				{
 					message += "팝업 내용 항목 X\n";
 				}
-			} 
+			}
 
 			return message;
 		}

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
+
 
 namespace MakeNews
 {
@@ -8,14 +10,13 @@ namespace MakeNews
 		DataManger dm;
 		public FixTextSttingPage(DataManger _dm)
 		{
-			InitializeComponent();
-			Font = Common.GetFont();
+			InitializeComponent();			
 			dm = _dm;
 
 			FixText text = dm.GetFixText(Common.fixdataPath);
 
 			Tb_IndexHeadTitile.Text = text.IndexHead;
-			Tb_IndexCoverPTag.Text= text.IndexCoverP;
+			Tb_IndexCoverPTag.Text = text.IndexCoverP;
 			Tb_IndexCopy.Text = text.IndexCopy;
 			Tb_HistoryTitle.Text = text.HistoryHead;
 			Tb_Lst_wrapH2.Text = text.HistoryH2;

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
 
@@ -11,17 +12,17 @@ namespace MakeNews
 	public partial class MainPage: Form
 	{
 		DataManger dm;// DataManger 전역 호출 용 
-		DataTable index; 
-		DataTable history;  
-		public MainPage(DataManger _dm) 
+
+		DataTable index;
+		DataTable history;
+		public MainPage(DataManger _dm)
 		{
 			InitializeComponent();
-			Font = Common.GetFont();
-			
+			//Font = _font;
 			dm = _dm;
 		}
 
-		
+
 		private void Bt_Setting_Click(object sender, EventArgs e)
 		{
 			FixTextSttingPage form = new FixTextSttingPage(dm);
@@ -59,7 +60,7 @@ namespace MakeNews
 			{
 				MessageBox.Show(message);
 			}
-			
+
 		}
 
 		private void Bt_CreatHtml_Click(object sender, EventArgs e)
@@ -93,11 +94,11 @@ namespace MakeNews
 			index.Columns.Add("Pop up Img Src", typeof(string));
 			index.Columns.Add("Pop up Contents", typeof(string));
 
-			
-				
+
+
 			// 각각의 행에 내용을 입력합니다.
 			index.Rows.Add();
-			
+
 
 			// 값들이 입력된 테이블을 DataGridView에 입력합니다.
 			Dgv_index.DataSource = index;

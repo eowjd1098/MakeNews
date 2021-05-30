@@ -51,22 +51,23 @@ namespace MakeNews
 			// 
 			// Bt_Change
 			// 
-			this.Bt_Change.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.Bt_Change.Location = new System.Drawing.Point(720, 237);
+			this.Bt_Change.Location = new System.Drawing.Point(720, 240);
 			this.Bt_Change.Name = "Bt_Change";
 			this.Bt_Change.Size = new System.Drawing.Size(80, 49);
 			this.Bt_Change.TabIndex = 0;
 			this.Bt_Change.Text = "Change";
+			this.Bt_Change.UseVisualStyleBackColor = true;
 			this.Bt_Change.Click += new System.EventHandler(this.Bt_Change_Click);
 			// 
 			// Bt_Cancel
 			// 
-			this.Bt_Cancel.DialogResult = System.Windows.Forms.DialogResult.No;
-			this.Bt_Cancel.Location = new System.Drawing.Point(806, 237);
+			this.Bt_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+			this.Bt_Cancel.Location = new System.Drawing.Point(806, 240);
 			this.Bt_Cancel.Name = "Bt_Cancel";
 			this.Bt_Cancel.Size = new System.Drawing.Size(80, 49);
 			this.Bt_Cancel.TabIndex = 9;
 			this.Bt_Cancel.Text = "Cancel";
+			this.Bt_Cancel.UseVisualStyleBackColor = true;
 			this.Bt_Cancel.Click += new System.EventHandler(this.Bt_Cancel_Click);
 			// 
 			// groupBox1
@@ -78,7 +79,7 @@ namespace MakeNews
 			this.groupBox1.Controls.Add(this.label4);
 			this.groupBox1.Controls.Add(this.Tb_IndexCopy);
 			this.groupBox1.Controls.Add(this.label1);
-			this.groupBox1.Location = new System.Drawing.Point(12, 9);
+			this.groupBox1.Location = new System.Drawing.Point(12, 12);
 			this.groupBox1.Name = "groupBox1";
 			this.groupBox1.Size = new System.Drawing.Size(874, 133);
 			this.groupBox1.TabIndex = 10;
@@ -149,7 +150,7 @@ namespace MakeNews
 			this.groupBox2.Controls.Add(this.label10);
 			this.groupBox2.Controls.Add(this.Tb_HistoryTitle);
 			this.groupBox2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox2.Location = new System.Drawing.Point(12, 151);
+			this.groupBox2.Location = new System.Drawing.Point(12, 154);
 			this.groupBox2.Name = "groupBox2";
 			this.groupBox2.Size = new System.Drawing.Size(874, 83);
 			this.groupBox2.TabIndex = 11;
@@ -191,7 +192,7 @@ namespace MakeNews
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(12, 237);
+			this.label7.Location = new System.Drawing.Point(12, 240);
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(187, 12);
 			this.label7.TabIndex = 12;
@@ -203,7 +204,7 @@ namespace MakeNews
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
 			this.CancelButton = this.Bt_Cancel;
-			this.ClientSize = new System.Drawing.Size(897, 297);
+			this.ClientSize = new System.Drawing.Size(895, 300);
 			this.ControlBox = false;
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.groupBox2);

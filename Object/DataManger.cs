@@ -28,16 +28,16 @@ namespace MakeNews
 				using (File.Create(path)) { }
 				return new FixText("", "", "", "", "");
 			}
-			else 
+			else
 			{
 				string[] lines = File.ReadAllLines(path);
-				if(lines.Length==0) 
+				if (lines.Length == 0)
 				{
 					return new FixText("", "", "", "", "");
 				}
 				string[] s =lines[0].Split(',');
 
-				return new FixText(s[0], s[1], s[2], s[3],s[4]);
+				return new FixText(s[0], s[1], s[2], s[3], s[4]);
 			}
 		}
 
@@ -55,7 +55,7 @@ namespace MakeNews
 		}
 
 
-		public void SaveInfo(string path,Writing writing)
+		public void SaveInfo(string path, Writing writing)
 		{
 			if (!File.Exists(path))
 			{
@@ -69,13 +69,13 @@ namespace MakeNews
 				sw.WriteLine(writing.ToString());
 				foreach (string data in lines)
 				{
-					if (data != null) 
+					if (data != null)
 					{
 						sw.WriteLine("{0}", data);
 					}
 				}
 			}
-			
+
 		}
 
 		public void CreateHtml(string indexPath, string historyPath, string dataPath)
@@ -106,12 +106,12 @@ namespace MakeNews
 				sw.WriteLine("{0}", @"<div class=""marquee_bx"">");
 				sw.WriteLine("{0}", @"<p class=""plz"">......................</p>");
 				sw.WriteLine("{0}", @"</div>");
-				sw.WriteLine("{0}",@"</div>");
+				sw.WriteLine("{0}", @"</div>");
 				sw.WriteLine("{0}", @"</section >");
-				sw.WriteLine("{0}",@"<footer id = ""footer"" >");
-				sw.WriteLine("{0}",@"<strong class=""copy"">..................</strong>");
+				sw.WriteLine("{0}", @"<footer id = ""footer"" >");
+				sw.WriteLine("{0}", @"<strong class=""copy"">..................</strong>");
 				sw.WriteLine("{0}", @"</footer>");
-				sw.WriteLine("{0}","</div>");
+				sw.WriteLine("{0}", "</div>");
 				//
 				//Popup 공간
 

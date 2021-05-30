@@ -11,7 +11,7 @@ namespace MakeNews
 		public static string indexPath = Application.StartupPath + @"\Index.html";
 		public static string historyPath = Application.StartupPath + @"\History.html";
 
-		public static Font GetFont() 
+		public static Font SetFont()
 		{
 			PrivateFontCollection privateFont = new PrivateFontCollection();
 			privateFont.AddFontFile(@"ect\AppleSDGothicNeoM.ttf");
@@ -19,9 +19,9 @@ namespace MakeNews
 
 			return font;
 		}
- 
+
 		//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
-		public string GetIndexHeadHtml(string Fixtitile) 
+		public string GetIndexHeadHtml(string Fixtitile)
 		{
 			string text =
 @"<!DOCTYPE html>
@@ -50,7 +50,7 @@ namespace MakeNews
 	<link rel=""stylesheet"" href=""css/style.css"">
 	<script src=""js/jquery-3.5.1.min.js""></script>
 	</head>";
-			
+
 			return text;
 		}
 		public string GetIndexBodyUpperHtml(string Ptag)
@@ -80,7 +80,7 @@ namespace MakeNews
 				<ul>";
 			return text;
 		}
-		public string GetIndexBodyNewsNotImgHtml(string url,string emogi,string titile,string sumry,string date,string catagory)
+		public string GetIndexBodyNewsNotImgHtml(string url, string emogi, string titile, string sumry, string date, string catagory)
 		{
 			string text =
 @"			<!-- 기사 / 이미지 없는 경우 -->
@@ -100,18 +100,18 @@ namespace MakeNews
 			<!-- //기사 / 이미지 없는 경우 -->";
 			return text;
 		}
-		public string GetIndexBodyNewsImgHtml(string Fixtitile)
+		public string GetIndexBodyNewsImgHtml(string url, string img, string titile, string date, string catagory)
 		{
 			string text =
 @"			<!-- 기사 / 이미지 있는 경우 -->
 			<li class=""article img"">
-				<a href=""javascript:void(0);"" target=""_blank"">
-					<div class=""thumb""><img src=""img/tmp_news.png"" width=""100%"" height="""" alt=""기사 이미지""></div><!-- 이미지 사이즈 350*250 / 사이즈 안맞을 경우 상단부터 노출 하단 잘림 -->
+				<a href="""+url+@""" target=""_blank"">
+					<div class=""thumb""><img src="""+img+@""" width=""100%"" height="""" alt=""기사 이미지""></div><!-- 이미지 사이즈 350*250 / 사이즈 안맞을 경우 상단부터 노출 하단 잘림 -->
 					<div class=""news_wrap"">
-						<h3 class=""tit"">✏️ 이미지 있는 기사는 타이틀 한 줄만!</h3><!-- 이미지 있는 기사는 타이틀 한줄 노출, 이후 말줄임표 처리 -->
+						<h3 class=""tit"">"+titile+@"</h3><!-- 이미지 있는 기사는 타이틀 한줄 노출, 이후 말줄임표 처리 -->
 						<div class=""info"">
-							<time class=""date"">2021/05/10</time>
-							<em class=""category"">디자인 트렌드</em>
+							<time class=""date"">"+date+@"</time>
+							<em class=""category"">"+catagory+@"</em>
 						</div>
 					</div>
 				</a><!-- href= ""아웃링크 주소"" / 새탭 열림 -->

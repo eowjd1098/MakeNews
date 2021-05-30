@@ -48,10 +48,10 @@ namespace MakeNews
 			// 
 			// Bt_Setting
 			// 
-			this.Bt_Setting.Location = new System.Drawing.Point(1211, 42);
+			this.Bt_Setting.Location = new System.Drawing.Point(1320, 35);
 			this.Bt_Setting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_Setting.Name = "Bt_Setting";
-			this.Bt_Setting.Size = new System.Drawing.Size(131, 55);
+			this.Bt_Setting.Size = new System.Drawing.Size(131, 57);
 			this.Bt_Setting.TabIndex = 31;
 			this.Bt_Setting.Text = "Fix Text Setting";
 			this.Bt_Setting.UseVisualStyleBackColor = true;
@@ -60,28 +60,27 @@ namespace MakeNews
 			// Dgv_index
 			// 
 			this.Dgv_index.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.Dgv_index.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
-			this.Dgv_index.Location = new System.Drawing.Point(12, 42);
+			this.Dgv_index.Location = new System.Drawing.Point(12, 35);
 			this.Dgv_index.Name = "Dgv_index";
 			this.Dgv_index.RowTemplate.Height = 23;
 			this.Dgv_index.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.Dgv_index.Size = new System.Drawing.Size(1164, 193);
+			this.Dgv_index.Size = new System.Drawing.Size(1302, 195);
 			this.Dgv_index.TabIndex = 32;
 			// 
 			// Dgv_History
 			// 
 			this.Dgv_History.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.Dgv_History.Location = new System.Drawing.Point(12, 293);
+			this.Dgv_History.Location = new System.Drawing.Point(12, 286);
 			this.Dgv_History.Name = "Dgv_History";
 			this.Dgv_History.RowTemplate.Height = 23;
 			this.Dgv_History.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.Dgv_History.Size = new System.Drawing.Size(1164, 245);
+			this.Dgv_History.Size = new System.Drawing.Size(1302, 247);
 			this.Dgv_History.TabIndex = 33;
 			// 
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(10, 17);
+			this.label1.Location = new System.Drawing.Point(12, 11);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(65, 12);
 			this.label1.TabIndex = 34;
@@ -90,7 +89,7 @@ namespace MakeNews
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(13, 271);
+			this.label2.Location = new System.Drawing.Point(13, 264);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(73, 12);
 			this.label2.TabIndex = 35;
@@ -98,10 +97,10 @@ namespace MakeNews
 			// 
 			// Bt_OpenHtml
 			// 
-			this.Bt_OpenHtml.Location = new System.Drawing.Point(1211, 483);
+			this.Bt_OpenHtml.Location = new System.Drawing.Point(1320, 476);
 			this.Bt_OpenHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_OpenHtml.Name = "Bt_OpenHtml";
-			this.Bt_OpenHtml.Size = new System.Drawing.Size(131, 55);
+			this.Bt_OpenHtml.Size = new System.Drawing.Size(131, 57);
 			this.Bt_OpenHtml.TabIndex = 37;
 			this.Bt_OpenHtml.Text = "Open HTML";
 			this.Bt_OpenHtml.UseVisualStyleBackColor = true;
@@ -109,10 +108,10 @@ namespace MakeNews
 			// 
 			// Bt_AddData
 			// 
-			this.Bt_AddData.Location = new System.Drawing.Point(1211, 103);
+			this.Bt_AddData.Location = new System.Drawing.Point(1320, 96);
 			this.Bt_AddData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_AddData.Name = "Bt_AddData";
-			this.Bt_AddData.Size = new System.Drawing.Size(131, 55);
+			this.Bt_AddData.Size = new System.Drawing.Size(131, 57);
 			this.Bt_AddData.TabIndex = 36;
 			this.Bt_AddData.Text = "Add Item";
 			this.Bt_AddData.UseVisualStyleBackColor = true;
@@ -120,10 +119,10 @@ namespace MakeNews
 			// 
 			// Bt_CreatHtml
 			// 
-			this.Bt_CreatHtml.Location = new System.Drawing.Point(1211, 422);
+			this.Bt_CreatHtml.Location = new System.Drawing.Point(1320, 415);
 			this.Bt_CreatHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_CreatHtml.Name = "Bt_CreatHtml";
-			this.Bt_CreatHtml.Size = new System.Drawing.Size(131, 55);
+			this.Bt_CreatHtml.Size = new System.Drawing.Size(131, 57);
 			this.Bt_CreatHtml.TabIndex = 38;
 			this.Bt_CreatHtml.Text = "Create HTML";
 			this.Bt_CreatHtml.UseVisualStyleBackColor = true;
@@ -131,9 +130,9 @@ namespace MakeNews
 			// 
 			// Btn_Up
 			// 
-			this.Btn_Up.Location = new System.Drawing.Point(605, 249);
+			this.Btn_Up.Location = new System.Drawing.Point(605, 242);
 			this.Btn_Up.Name = "Btn_Up";
-			this.Btn_Up.Size = new System.Drawing.Size(42, 21);
+			this.Btn_Up.Size = new System.Drawing.Size(42, 23);
 			this.Btn_Up.TabIndex = 39;
 			this.Btn_Up.Text = "↑";
 			this.Btn_Up.UseVisualStyleBackColor = true;
@@ -141,9 +140,9 @@ namespace MakeNews
 			// 
 			// Btn_Down
 			// 
-			this.Btn_Down.Location = new System.Drawing.Point(653, 249);
+			this.Btn_Down.Location = new System.Drawing.Point(653, 242);
 			this.Btn_Down.Name = "Btn_Down";
-			this.Btn_Down.Size = new System.Drawing.Size(42, 21);
+			this.Btn_Down.Size = new System.Drawing.Size(42, 23);
 			this.Btn_Down.TabIndex = 40;
 			this.Btn_Down.Text = "↓";
 			this.Btn_Down.UseVisualStyleBackColor = true;
@@ -152,7 +151,7 @@ namespace MakeNews
 			// MainPage
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(1458, 561);
+			this.ClientSize = new System.Drawing.Size(1463, 545);
 			this.Controls.Add(this.Btn_Down);
 			this.Controls.Add(this.Btn_Up);
 			this.Controls.Add(this.Bt_CreatHtml);
