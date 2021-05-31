@@ -48,5 +48,9 @@
 			Contents + "," + Url + "," + Imgsrc + "," + Category + "," + Year + "-" + Month + "-" + Day + "," + Popuptitile + "," +
 			PopupImgSrc + "," + PopupContent; ;
 		}
+		public string GetDate() 
+		{
+			return Year + "-" + Month + "-" + Day;
+		}
 	}
 }

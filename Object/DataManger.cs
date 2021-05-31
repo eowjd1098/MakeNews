@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System.Data.SQLite;
+using System.IO;
 
 namespace MakeNews
 {
@@ -20,7 +21,7 @@ namespace MakeNews
 		}
 		#endregion
 
-
+		#region 고정형 텍스트
 		public FixText GetFixText(string path)
 		{
 			if (!File.Exists(path))
@@ -54,6 +55,133 @@ namespace MakeNews
 
 		}
 
+		#endregion
+
+		#region Data Base
+		
+
+		
+		//DB File Create + Table Create
+		public void InitDataBase() 
+		{
+			if (File.Exists(Common.DBPath))
+			{
+				return;
+			}
+			
+			SQLiteConnection.CreateFile(Common.DBPath);
+
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+
+				string sql = 
+				@"CREATE TABLE Data (
+					Num INTEGER NOT NULL,
+					Session INTEGER NOT NULL,
+					ImgUse	INTEGER NOT NULL,
+					PopupUse	INTEGER NOT NULL,
+					Emogi	INTEGER,
+					Title	TEXT,
+					Contents	TEXT,
+					Url	TEXT,
+					ImgUrl	TEXT,
+					Category	TEXT,
+					Date	TEXT,
+					PopupTitle	TEXT,
+					PopupImgSrc	TEXT,
+					PopupContent	TEXT,
+					PRIMARY KEY(Num AUTOINCREMENT)
+				)";
+				 
+				SQLiteCommand command = new SQLiteCommand(sql, conn);
+				int result = command.ExecuteNonQuery();
+
+				conn.Close();
+			}
+		}
+
+		public void InsertInfo(Writing writing)
+		{
+			// 추가중 세션별로 꽉 차있는경우에 역으로 검색 하여 처음 들어온 값에 세션을검색 업데이트후 인서트 
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				int session = 1;
+				int result = -1;
+				if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
+				{
+					result = SelectCountSession(session);
+					if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+					{
+						System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Insert");
+						return;
+					} 
+					else if (result >= 6) 
+					{
+						//Updata
+					}
+				}
+				else //팝업이있음 = 정보 일경우
+				{
+					result = SelectCountSession(++session);
+					if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+					{
+						System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Insert");
+						return;
+					}
+					else if (result >= 2)
+					{
+						//Updata
+					}
+				}
+
+				string sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
+								VALUES ("+session+","+writing.Popup+","+writing.Emogi+",'"+writing.Title+"','"+writing.Contents+"','"+writing.Url+"','"+writing.Imgsrc+"','"+writing.GetDate() +"','"
+								+writing.Popuptitile +"','"+writing.PopupImgSrc+"','"+writing.PopupContent +"')";
+				SQLiteCommand command = new SQLiteCommand(sql, conn);
+				result = command.ExecuteNonQuery();
+				
+				conn.Close();
+			}
+			//String sql = "insert into members (name, age) values ('김도현', 6)";
+			//SQLiteCommand command = new SQLiteCommand(sql, conn);
+			//int result = command.ExecuteNonQuery();
+
+		}
+
+		public void UpdateInfo() 
+		{
+		
+		}
+
+		public void DeleteInfo() 
+		{
+		}
+
+		public void ResetDataBase() 
+		{
+			
+		}
+		 
+		public int SelectCountSession(int sessiontype) 
+		{
+			int read = -1;
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				string sql = "SELECT count(Session) FROM Data WHERE Session="+sessiontype;
+				SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+				read = (int)cmd.ExecuteScalar();
+				conn.Close();
+			}
+			return read;
+		}
+
+
+		#endregion
+
+
 
 		public void SaveInfo(string path, Writing writing)
 		{
@@ -75,8 +203,9 @@ namespace MakeNews
 					}
 				}
 			}
-
 		}
+
+
 
 		public void CreateHtml(string indexPath, string historyPath, string dataPath)
 		{

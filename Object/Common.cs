@@ -7,18 +7,23 @@ namespace MakeNews
 	public class Common
 	{
 		public static string fixdataPath = Application.StartupPath + @"\FixData.txt";
-		public static string dataPath = Application.StartupPath + @"\Data.txt";
+		public static string dataPath = Application.StartupPath + @"\Data.csv";
 		public static string indexPath = Application.StartupPath + @"\Index.html";
 		public static string historyPath = Application.StartupPath + @"\History.html";
+		public static string DBPath = Application.StartupPath + @"\Data.db";
+		public static string DBDataPath = "Data Source=" + Application.StartupPath + "\\Data.db;Version=3;";
 
-		public static Font SetFont()
-		{
-			PrivateFontCollection privateFont = new PrivateFontCollection();
-			privateFont.AddFontFile(@"ect\AppleSDGothicNeoM.ttf");
-			Font font = new Font(privateFont.Families[0], 10f);
+		// 외부 폰트사용시 일정시간후 메모리 참조 거부 활성화됨 
+		//public static Font SetFont()
+		//{
+		//	PrivateFontCollection privateFont = new PrivateFontCollection();
+		//	privateFont.AddFontFile(@"ect\NanumBarunGothic.ttf");
+		//	Font font = new Font(privateFont.Families[0], 10f);
+		//
+		//	return font;
+		//}
 
-			return font;
-		}
+
 
 		//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
 		public string GetIndexHeadHtml(string Fixtitile)
@@ -119,47 +124,47 @@ namespace MakeNews
 			<!-- //기사 / 이미지 있는 경우 -->";
 			return text;
 		}
-		public string GetIndexBodyPopupNoImgHtml(string Fixtitile)
+		public string GetIndexBodyPopupNoImgHtml(string popupnum, string emogi, string titile, string sumry, string date, string catagory)
 		{
 			string text =
-@"				<!-- 소식 / 클릭시 ly_pop1 팝업 -->
+@"				<!-- 소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->
 				<li class=""noti"">
-					<a href=""#ly_pop1"">
+					<a href=""#ly_pop"+popupnum+@""">
 						<div class=""news_wrap"">
-							<span class=""emoji"">🍜</span>
-							<h3 class=""tit"">★급★ 한강에 라면 먹으러 갈 사람!!!</h3>
-							<p class=""smry"">오늘 18:00 퇴근 후 한강에 라면 먹으러 갈 사람 구합니다! 선착순 2명! 아. 근데 나 야근하면 어쩌지?</p>
+							<span class=""emoji"">"+emogi+@"</span>
+							<h3 class=""tit"">"+titile+@"</h3>
+							<p class=""smry"">"+sumry+@"</p>
 							<div class=""info"">
-								<time class=""date"">2021/05/10</time>
-								<em class=""category"">인재채용</em>
+								<time class=""date"">"+date+@"</time>
+								<em class=""category"">"+catagory+@"</em>
 							</div>
 						</div>
 					</a>
 				</li>
-				<!-- //소식 / 클릭시 ly_pop1 팝업 -->";
+				<!-- //소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->";
 			return text;
 		}
-		public string GetIndexBodyPopupImgHtml(string Fixtitile)
+		public string GetIndexBodyPopupImgHtml(string popupnum, string emogi, string titile, string sumry, string date, string catagory)
 		{
 			string text =
-@"				<!-- 소식 / 클릭시 ly_pop2 팝업 -->
+@"				<!-- 소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->
 				<li class=""noti"">
-					<a href=""#ly_pop2"">
+					<a href=""#ly_pop"+popupnum+@""">
 						<div class=""news_wrap"">
-							<span class=""emoji"">🍰</span>
-							<h3 class=""tit"">김지수 사원님, 축하합니다! 🥳</h3>
-							<p class=""smry"">드디어 김지수 사원님께서 퇴사를 하십니다! 2021년 5월 28일 금요일까지(★D-16★) 근무하시니 지수님을 보시면 축하의 인사 한마디씩 부탁드려요!</p>
+							<span class=""emoji"">"+emogi+@"</span>
+							<h3 class=""tit"">"+titile+@"</h3>
+							<p class=""smry"">"+sumry+@"</p>
 							<div class=""info"">
-								<time class=""date"">2021/05/12</time>
-								<em class=""category"">근태관리</em>
+								<time class=""date"">"+date+@"</time>
+								<em class=""category"">"+catagory+@"</em>
 							</div>
 						</div>
 					</a>
 				</li>
-				<!-- //소식 / 클릭시 ly_pop2 팝업 -->";
+				<!-- //소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->";
 			return text;
 		}
-		public string GetIndexBodyEmptyHtml(string Fixtitile)
+		public string GetIndexBodyEmptyHtml()
 		{
 			string text =
 @"				<!-- 데이터 없는 경우 빈 li 생성 -->
@@ -167,7 +172,7 @@ namespace MakeNews
 				<!-- //데이터 없는 경우 빈 li 생성 -->";
 			return text;
 		}
-		public string GetIndexBodyDownHtml(string Fixtitile)
+		public string GetIndexBodyDownHtml(string copy)
 		{
 			string text =
 @"				<!-- 지난 뉴스 페이지 이동 -->
@@ -199,7 +204,7 @@ namespace MakeNews
 	<!-- //container -->
 	<!-- footer -->
 	<footer id=""footer"">
-		<strong class=""copy"">'금요일 뉴스레터'는 윤재휘가 쓰고, 김지수가 그립니다.</strong>
+		<strong class=""copy"">"+copy+@"</strong>
 	</footer>
 	<!-- //footer -->
 </div>";
@@ -234,7 +239,7 @@ namespace MakeNews
 <!-- //ly_pop / 두번째 소식 팝업 -->";
 			return text;
 		}
-		public string GetIndexScriptHtml(string Fixtitile)
+		public string GetIndexScriptHtml()
 		{
 			string text=
 @"<script>
@@ -275,8 +280,8 @@ $(document).mouseup(function(e){
 			return text;
 		}
 
-		//Histroy Page 순서  Head -> Body -> News(반복)->Script
-		public string GetIHistoryHeadHtml(string Fixtitile)
+		//Histroy Page 순서  Head -> News(반복)->Script
+		public string GetIHistoryHeadHtml(string Fixtitile, string lst_wrapH2)
 		{
 			string text =
 @"<!DOCTYPE html>
@@ -304,14 +309,8 @@ $(document).mouseup(function(e){
 	<meta property=""og: image"" content = ""이미지"">
 	<link rel=""stylesheet"" href=""css/style.css"">
 	<script src=""js/jquery-3.5.1.min.js""></script>
-	</head>";
-
-			return text;
-		}
-		public string GetHistoryBodyHtml()
-		{
-			string text =
-@"<body>
+	</head>
+	<body>
 <!-- wrap -->
 <div id=""wrap"" class=""history"">
 	<!-- header --><!-- //header -->
@@ -328,19 +327,20 @@ $(document).mouseup(function(e){
 			</div>
 			<!-- lst_wrap -->
 			<section class=""lst_wrap"">
-				<h2>지난 뉴스 돌아보기</h2>
+				<h2>"+lst_wrapH2+@"</h2>
 				<ul>";
 
 			return text;
 		}
-		public string GetHistoryNewsHtml()
+
+		public string GetHistoryNewsHtml(string url, string catagory,string titile)
 		{
 			string text =
 @"				<li>
-					<a href=""javascript: void(0); "" target=""_blank"">
+					<a href="""+url+@""" target=""_blank"">
 						  < div class=""tit_bx"">
-							<strong class=""category"">블록체인과 기술</strong>
-							<h3 class=""tit"">지난 뉴스에 지난 소식까지 들어올 수 있을까요?</h3><!-- 디자인상 영역보다 길어질 경우 말줄임표 처리 -->
+							<strong class=""category"">"+catagory+@"</strong>
+							<h3 class=""tit"">"+titile+@"</h3><!-- 디자인상 영역보다 길어질 경우 말줄임표 처리 -->
 						</div>
 					</a><!-- href=""아웃링크 주소"" / 새탭 열림 -->
 				</li>";
