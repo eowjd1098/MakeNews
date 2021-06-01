@@ -40,8 +40,6 @@ namespace MakeNews
 			this.Bt_OpenHtml = new System.Windows.Forms.Button();
 			this.Bt_AddData = new System.Windows.Forms.Button();
 			this.Bt_CreatHtml = new System.Windows.Forms.Button();
-			this.Btn_Up = new System.Windows.Forms.Button();
-			this.Btn_Down = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.Dgv_History = new System.Windows.Forms.DataGridView();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -51,6 +49,8 @@ namespace MakeNews
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.Btn_Down = new System.Windows.Forms.Button();
+			this.Btn_Up = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_Info)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_New)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_History)).BeginInit();
@@ -97,6 +97,7 @@ namespace MakeNews
 			this.Dgv_index_Info.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.Dgv_index_Info.Size = new System.Drawing.Size(1289, 191);
 			this.Dgv_index_Info.TabIndex = 32;
+			this.Dgv_index_Info.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_index_Info_CellClick);
 			// 
 			// Dgv_index_New
 			// 
@@ -168,26 +169,6 @@ namespace MakeNews
 			this.Bt_CreatHtml.UseVisualStyleBackColor = true;
 			this.Bt_CreatHtml.Click += new System.EventHandler(this.Bt_CreatHtml_Click);
 			// 
-			// Btn_Up
-			// 
-			this.Btn_Up.Location = new System.Drawing.Point(512, 3);
-			this.Btn_Up.Name = "Btn_Up";
-			this.Btn_Up.Size = new System.Drawing.Size(42, 23);
-			this.Btn_Up.TabIndex = 39;
-			this.Btn_Up.Text = "↑";
-			this.Btn_Up.UseVisualStyleBackColor = true;
-			this.Btn_Up.Click += new System.EventHandler(this.Btn_Up_Click);
-			// 
-			// Btn_Down
-			// 
-			this.Btn_Down.Location = new System.Drawing.Point(555, 3);
-			this.Btn_Down.Name = "Btn_Down";
-			this.Btn_Down.Size = new System.Drawing.Size(42, 23);
-			this.Btn_Down.TabIndex = 40;
-			this.Btn_Down.Text = "↓";
-			this.Btn_Down.UseVisualStyleBackColor = true;
-			this.Btn_Down.Click += new System.EventHandler(this.Btn_Down_Click);
-			// 
 			// button1
 			// 
 			this.button1.Location = new System.Drawing.Point(3, 63);
@@ -197,6 +178,7 @@ namespace MakeNews
 			this.button1.TabIndex = 41;
 			this.button1.Text = "Change Item";
 			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
 			// Dgv_History
 			// 
@@ -313,6 +295,26 @@ namespace MakeNews
 			this.panel4.Size = new System.Drawing.Size(200, 349);
 			this.panel4.TabIndex = 40;
 			// 
+			// Btn_Down
+			// 
+			this.Btn_Down.Location = new System.Drawing.Point(555, 3);
+			this.Btn_Down.Name = "Btn_Down";
+			this.Btn_Down.Size = new System.Drawing.Size(42, 23);
+			this.Btn_Down.TabIndex = 40;
+			this.Btn_Down.Text = "↓";
+			this.Btn_Down.UseVisualStyleBackColor = true;
+			this.Btn_Down.Click += new System.EventHandler(this.Btn_Down_Click);
+			// 
+			// Btn_Up
+			// 
+			this.Btn_Up.Location = new System.Drawing.Point(512, 3);
+			this.Btn_Up.Name = "Btn_Up";
+			this.Btn_Up.Size = new System.Drawing.Size(42, 23);
+			this.Btn_Up.TabIndex = 39;
+			this.Btn_Up.Text = "↑";
+			this.Btn_Up.UseVisualStyleBackColor = true;
+			this.Btn_Up.Click += new System.EventHandler(this.Btn_Up_Click);
+			// 
 			// MainPage
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -353,8 +355,6 @@ namespace MakeNews
 		private System.Windows.Forms.Button Bt_OpenHtml;
 		private System.Windows.Forms.Button Bt_AddData;
 		private System.Windows.Forms.Button Bt_CreatHtml;
-		private System.Windows.Forms.Button Btn_Up;
-		private System.Windows.Forms.Button Btn_Down;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.DataGridView Dgv_History;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
@@ -364,5 +364,7 @@ namespace MakeNews
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Panel panel3;
 		private System.Windows.Forms.Panel panel4;
+		private System.Windows.Forms.Button Btn_Up;
+		private System.Windows.Forms.Button Btn_Down;
 	}
 }

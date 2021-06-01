@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.IO;
@@ -18,13 +19,8 @@ namespace MakeNews
 		public MainPage(DataManger _dm)
 		{
 			InitializeComponent();
-			//Font = Common.SetFont();
 			dm = _dm;
-
-
 			dm.InitDataBase();
-
-
 		}
 		 
 
@@ -75,7 +71,7 @@ namespace MakeNews
 
 		private void Btn_Up_Click(object sender, EventArgs e)
 		{
-			dm.InsertInfo();
+			
 		}
 
 		private void Btn_Down_Click(object sender, EventArgs e)
@@ -85,68 +81,52 @@ namespace MakeNews
 
 		private void MainPage_Load(object sender, EventArgs e)
 		{
-			 
-
-
-			
-
-
-			
-			 //버튼 추가
- 	        DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
- 	          
- 	        buttonColumn.HeaderText = "Button";
- 	        buttonColumn.Name = "button";
-
-			Dgv_index_Info.Columns.Add("c1","Img Use");
-			Dgv_index_Info.Columns.Add("c2","Popup Use");
-			Dgv_index_Info.Columns.Add("c3","Emoji");
-			Dgv_index_Info.Columns.Add("c4","Title");
-			Dgv_index_Info.Columns.Add("c5","Contents");
-			Dgv_index_Info.Columns.Add("c6","Img Src");
-			Dgv_index_Info.Columns.Add("c7","Category");
-			Dgv_index_Info.Columns.Add("c8","Date");
-			Dgv_index_Info.Columns.Add("c9","Pop up Title");
-			Dgv_index_Info.Columns.Add("c10","Pop up Img Src");
-			Dgv_index_Info.Columns.Add("c11","Pop up Contents");
-			Dgv_index_Info.Columns.Add(buttonColumn);
-
-
-			Dgv_index_Info.Rows.Add();
-
-			Dgv_index_Info[0, 0].Value = false;
-			Dgv_index_Info[1, 0].Value = false;
-			Dgv_index_Info[2, 0].Value = "Emoji";
-			Dgv_index_Info[3, 0].Value = "Title";
-			Dgv_index_Info[4, 0].Value = "Contents";
-			Dgv_index_Info[5, 0].Value = "Img Src";
-			Dgv_index_Info[6, 0].Value = "Category";
-			Dgv_index_Info[7, 0].Value = "Date";
-			Dgv_index_Info[8, 0].Value = "Pop up Title";
-			Dgv_index_Info[9, 0].Value = "Pop up Img Src";
-			Dgv_index_Info[10, 0].Value = "Pop up Contents";
-			Dgv_index_Info[11, 0].Value = "Delete";
-
-			Dgv_index_Info.CellClick += dataGridView1_CellClick;
+			DgvloadData(Dgv_index_New,1);
+			DgvloadData(Dgv_index_Info,2);
+			DgvloadData(Dgv_History,3);
 		}
 
-		public void button_ClickTest() 
+		private void button1_Click(object sender, EventArgs e)
 		{
-			MessageBox.Show("Test");
+			
+			
 		}
 
-		void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+		private void Dgv_index_Info_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
-			// 버튼 클릭 이벤트 설정  
-			// - 그리드뷰를 클릭했을 때, 버튼 컬럼 인덱스와 같으면 처리를 한다.  
-			// - 이런식으로 버튼 클릭 이벤트를 흉내낸다.  
 			if (e.ColumnIndex == 11)
 			{
 				MessageBox.Show("test");
 			}
 		}
 
-		 
+		private void DgvloadData(DataGridView dataGridView,int num) 
+		{
+			dataGridView.Columns.Clear();
+			List<Writing> data = dm.SelectData(num);
 
+			DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
+			buttonColumn.HeaderText = "Delete";
+			buttonColumn.Name = "Delete";
+
+			dataGridView.Columns.Add("c1", "Img Use");
+			dataGridView.Columns.Add("c2", "Popup Use");
+			dataGridView.Columns.Add("c3", "Emoji");
+			dataGridView.Columns.Add("c4", "Title");
+			dataGridView.Columns.Add("c5", "Contents");
+			dataGridView.Columns.Add("c6", "Img Src");
+			dataGridView.Columns.Add("c7", "Category");
+			dataGridView.Columns.Add("c8", "Date");
+			dataGridView.Columns.Add("c9", "Pop up Title");
+			dataGridView.Columns.Add("c10", "Pop up Img Src");
+			dataGridView.Columns.Add("c11", "Pop up Contents");
+			dataGridView.Columns.Add(buttonColumn);
+
+			foreach (Writing item in data)
+			{
+				dataGridView.Rows.Add(item.Imge, item.Popup, item.Emogi, item.Title, item.Contents, item.Imgsrc, item.Category, item.GetDate(), item.Popuptitile, item.PopupImgSrc, item.PopupContent, "Delete");
+			}
+
+		}
 	}
 }

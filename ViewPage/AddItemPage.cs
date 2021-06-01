@@ -266,7 +266,7 @@ namespace MakeNews
 			}
 			#endregion
 
-			dm.SaveInfo(Common.dataPath, new Writing(ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
+			dm.InsertInfo( new Writing(ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
 			MessageBox.Show("Complete");
 		}
 
