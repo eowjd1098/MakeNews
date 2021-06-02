@@ -7,13 +7,13 @@ namespace MakeNews
 	public partial class AddItemPage: Form
 	{
 		DataManger dm;
-
-		#region Form Event 부
-		public AddItemPage(DataManger _dm)
+		public AddItemPage(DataManger _dm,string btntext)
 		{
 			InitializeComponent();
 			dm = _dm;
 
+			Text = btntext+"Page";
+			Bt_Change.Text = btntext;
 			Tb_Emogi.Enabled = true;
 			Tb_imgsrc.Enabled = false;
 			Tb_PoupTitle.Enabled = false;
@@ -23,11 +23,87 @@ namespace MakeNews
 
 		}
 
-
+		#region Form Event 부
 		private void Bt_CopyContent_Click(object sender, EventArgs e)
 		{
 			Tb_PoupContent.Text = Tb_Content.Text;
 		}
+		private void Bt_Change_Click(object sender, EventArgs e)
+		{
+			bool ImgUse =false;
+			bool popupUse =false;
+			string message;
+
+			#region 빈칸 체크
+			if (Cb_ImageUse.CheckState == CheckState.Unchecked)
+			{
+				if (Cb_PopupUse.CheckState == CheckState.Unchecked)
+				{
+					message = TextEmtyCheck(true, true, true, true, false, true, true, true, true, false, false, false);
+					if (message != "")
+					{
+						MessageBox.Show(message);
+						return;
+					}
+					ImgUse = false;
+					popupUse = false;
+
+				}
+				else if (Cb_PopupUse.CheckState == CheckState.Checked)
+				{
+					message = TextEmtyCheck(true, true, true, true, false, true, true, true, true, true, true, true);
+					if (message != "")
+					{
+						MessageBox.Show(message);
+						return;
+					}
+					ImgUse = false;
+					popupUse = true;
+				}
+				else
+				{
+
+				}
+			}
+			else if (Cb_ImageUse.CheckState == CheckState.Checked)
+			{
+				if (Cb_PopupUse.CheckState == CheckState.Unchecked)
+				{
+					message = TextEmtyCheck(false, true, true, true, true, true, true, true, true, false, false, false);
+					if (message != "")
+					{
+						MessageBox.Show(message);
+						return;
+					}
+					ImgUse = true;
+					popupUse = false;
+				}
+				else if (Cb_PopupUse.CheckState == CheckState.Checked)
+				{
+					message = TextEmtyCheck(false, true, true, true, true, true, true, true, true, true, true, true);
+					if (message != "")
+					{
+						MessageBox.Show(message);
+						return;
+					}
+					ImgUse = true;
+					popupUse = true;
+				}
+				else
+				{
+
+				}
+			}
+			#endregion
+
+			dm.InsertInfo( new Writing(0,ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
+			MessageBox.Show("Complete");
+		}
+		private void Bt_Cancel_Click(object sender, EventArgs e)
+		{
+			this.Close();
+		}
+		#endregion
 
 		#region 사용자화
 		private void Cb_ImageUse_CheckedChanged(object sender, EventArgs e)
@@ -196,83 +272,6 @@ namespace MakeNews
 		}
 		#endregion
 
-		#endregion
 
-		private void Bt_Change_Click(object sender, EventArgs e)
-		{
-			bool ImgUse =false;
-			bool popupUse =false;
-			string message;
-
-			#region 빈칸 체크
-			if (Cb_ImageUse.CheckState == CheckState.Unchecked)
-			{
-				if (Cb_PopupUse.CheckState == CheckState.Unchecked)
-				{
-					message = TextEmtyCheck(true, true, true, true, false, true, true, true, true, false, false, false);
-					if (message != "")
-					{
-						MessageBox.Show(message);
-						return;
-					}
-					ImgUse = false;
-					popupUse = false;
-
-				}
-				else if (Cb_PopupUse.CheckState == CheckState.Checked)
-				{
-					message = TextEmtyCheck(true, true, true, true, false, true, true, true, true, true, true, true);
-					if (message != "")
-					{
-						MessageBox.Show(message);
-						return;
-					}
-					ImgUse = false;
-					popupUse = true;
-				}
-				else
-				{
-
-				}
-			}
-			else if (Cb_ImageUse.CheckState == CheckState.Checked)
-			{
-				if (Cb_PopupUse.CheckState == CheckState.Unchecked)
-				{
-					message = TextEmtyCheck(false, true, true, true, true, true, true, true, true, false, false, false);
-					if (message != "")
-					{
-						MessageBox.Show(message);
-						return;
-					}
-					ImgUse = true;
-					popupUse = false;
-				}
-				else if (Cb_PopupUse.CheckState == CheckState.Checked)
-				{
-					message = TextEmtyCheck(false, true, true, true, true, true, true, true, true, true, true, true);
-					if (message != "")
-					{
-						MessageBox.Show(message);
-						return;
-					}
-					ImgUse = true;
-					popupUse = true;
-				}
-				else
-				{
-
-				}
-			}
-			#endregion
-
-			dm.InsertInfo( new Writing(ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
-			MessageBox.Show("Complete");
-		}
-
-		private void Bt_Cancel_Click(object sender, EventArgs e)
-		{
-			this.Close();
-		}
 	}
 }

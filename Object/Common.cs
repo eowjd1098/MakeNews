@@ -12,19 +12,8 @@ namespace MakeNews
 		public static string historyPath = Application.StartupPath + @"\History.html";
 		public static string DBPath = Application.StartupPath + @"\Data.db";
 		public static string DBDataPath = "Data Source=" + Application.StartupPath + "\\Data.db;Version=3;";
-
-		// 외부 폰트사용시 일정시간후 메모리 참조 거부 활성화됨 
-		//public static Font SetFont()
-		//{
-		//	PrivateFontCollection privateFont = new PrivateFontCollection();
-		//	privateFont.AddFontFile(@"ect\NanumBarunGothic.ttf");
-		//	Font font = new Font(privateFont.Families[0], 10f);
-		//
-		//	return font;
-		//}
-
-
-
+		
+		#region HTML CODE
 		//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
 		public string GetIndexHeadHtml(string Fixtitile)
 		{
@@ -332,7 +321,6 @@ $(document).mouseup(function(e){
 
 			return text;
 		}
-
 		public string GetHistoryNewsHtml(string url, string catagory,string titile)
 		{
 			string text =
@@ -385,6 +373,7 @@ $('.btn_wrap a').click(function () {
 
 			return text;
 		}
+		#endregion
 
 
 	}

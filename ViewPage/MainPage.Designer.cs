@@ -40,17 +40,19 @@ namespace MakeNews
 			this.Bt_OpenHtml = new System.Windows.Forms.Button();
 			this.Bt_AddData = new System.Windows.Forms.Button();
 			this.Bt_CreatHtml = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.Btn_Change = new System.Windows.Forms.Button();
 			this.Dgv_History = new System.Windows.Forms.DataGridView();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
 			this.splitContainer1 = new System.Windows.Forms.SplitContainer();
 			this.splitContainer2 = new System.Windows.Forms.SplitContainer();
 			this.panel1 = new System.Windows.Forms.Panel();
+			this.Btn_Up = new System.Windows.Forms.Button();
+			this.Btn_Down = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
-			this.Btn_Down = new System.Windows.Forms.Button();
-			this.Btn_Up = new System.Windows.Forms.Button();
+			this.Btn_Setting = new System.Windows.Forms.Button();
+			this.btn_CopyHtml = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_Info)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_New)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_History)).BeginInit();
@@ -71,10 +73,10 @@ namespace MakeNews
 			// 
 			// Bt_Setting
 			// 
-			this.Bt_Setting.Location = new System.Drawing.Point(3, 3);
+			this.Bt_Setting.Location = new System.Drawing.Point(0, 64);
 			this.Bt_Setting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_Setting.Name = "Bt_Setting";
-			this.Bt_Setting.Size = new System.Drawing.Size(131, 57);
+			this.Bt_Setting.Size = new System.Drawing.Size(197, 57);
 			this.Bt_Setting.TabIndex = 31;
 			this.Bt_Setting.Text = "Fix Text Setting";
 			this.Bt_Setting.UseVisualStyleBackColor = true;
@@ -117,6 +119,7 @@ namespace MakeNews
 			this.Dgv_index_New.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.Dgv_index_New.Size = new System.Drawing.Size(1289, 161);
 			this.Dgv_index_New.TabIndex = 33;
+			this.Dgv_index_New.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_index_New_CellClick);
 			// 
 			// label1
 			// 
@@ -141,7 +144,7 @@ namespace MakeNews
 			this.Bt_OpenHtml.Location = new System.Drawing.Point(3, 63);
 			this.Bt_OpenHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_OpenHtml.Name = "Bt_OpenHtml";
-			this.Bt_OpenHtml.Size = new System.Drawing.Size(131, 57);
+			this.Bt_OpenHtml.Size = new System.Drawing.Size(197, 57);
 			this.Bt_OpenHtml.TabIndex = 37;
 			this.Bt_OpenHtml.Text = "Open HTML";
 			this.Bt_OpenHtml.UseVisualStyleBackColor = true;
@@ -152,7 +155,7 @@ namespace MakeNews
 			this.Bt_AddData.Location = new System.Drawing.Point(3, 2);
 			this.Bt_AddData.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_AddData.Name = "Bt_AddData";
-			this.Bt_AddData.Size = new System.Drawing.Size(131, 57);
+			this.Bt_AddData.Size = new System.Drawing.Size(194, 57);
 			this.Bt_AddData.TabIndex = 36;
 			this.Bt_AddData.Text = "Add Item";
 			this.Bt_AddData.UseVisualStyleBackColor = true;
@@ -163,22 +166,22 @@ namespace MakeNews
 			this.Bt_CreatHtml.Location = new System.Drawing.Point(3, 2);
 			this.Bt_CreatHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_CreatHtml.Name = "Bt_CreatHtml";
-			this.Bt_CreatHtml.Size = new System.Drawing.Size(131, 57);
+			this.Bt_CreatHtml.Size = new System.Drawing.Size(197, 57);
 			this.Bt_CreatHtml.TabIndex = 38;
 			this.Bt_CreatHtml.Text = "Create HTML";
 			this.Bt_CreatHtml.UseVisualStyleBackColor = true;
 			this.Bt_CreatHtml.Click += new System.EventHandler(this.Bt_CreatHtml_Click);
 			// 
-			// button1
+			// Btn_Change
 			// 
-			this.button1.Location = new System.Drawing.Point(3, 63);
-			this.button1.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(131, 57);
-			this.button1.TabIndex = 41;
-			this.button1.Text = "Change Item";
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.Btn_Change.Location = new System.Drawing.Point(3, 63);
+			this.Btn_Change.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Btn_Change.Name = "Btn_Change";
+			this.Btn_Change.Size = new System.Drawing.Size(194, 57);
+			this.Btn_Change.TabIndex = 41;
+			this.Btn_Change.Text = "Change Item";
+			this.Btn_Change.UseVisualStyleBackColor = true;
+			this.Btn_Change.Click += new System.EventHandler(this.BtnChange_Click);
 			// 
 			// Dgv_History
 			// 
@@ -197,6 +200,7 @@ namespace MakeNews
 			this.Dgv_History.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.Dgv_History.Size = new System.Drawing.Size(1289, 320);
 			this.Dgv_History.TabIndex = 42;
+			this.Dgv_History.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_History_CellClick);
 			// 
 			// tableLayoutPanel1
 			// 
@@ -266,34 +270,15 @@ namespace MakeNews
 			this.panel1.Size = new System.Drawing.Size(1289, 33);
 			this.panel1.TabIndex = 37;
 			// 
-			// panel2
+			// Btn_Up
 			// 
-			this.panel2.Controls.Add(this.Bt_Setting);
-			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel2.Location = new System.Drawing.Point(1298, 3);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(200, 191);
-			this.panel2.TabIndex = 38;
-			// 
-			// panel3
-			// 
-			this.panel3.Controls.Add(this.Bt_AddData);
-			this.panel3.Controls.Add(this.button1);
-			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel3.Location = new System.Drawing.Point(1298, 200);
-			this.panel3.Name = "panel3";
-			this.panel3.Size = new System.Drawing.Size(200, 191);
-			this.panel3.TabIndex = 39;
-			// 
-			// panel4
-			// 
-			this.panel4.Controls.Add(this.Bt_CreatHtml);
-			this.panel4.Controls.Add(this.Bt_OpenHtml);
-			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.panel4.Location = new System.Drawing.Point(1298, 436);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(200, 349);
-			this.panel4.TabIndex = 40;
+			this.Btn_Up.Location = new System.Drawing.Point(512, 3);
+			this.Btn_Up.Name = "Btn_Up";
+			this.Btn_Up.Size = new System.Drawing.Size(42, 23);
+			this.Btn_Up.TabIndex = 39;
+			this.Btn_Up.Text = "↑";
+			this.Btn_Up.UseVisualStyleBackColor = true;
+			this.Btn_Up.Click += new System.EventHandler(this.Btn_Up_Click);
 			// 
 			// Btn_Down
 			// 
@@ -305,15 +290,58 @@ namespace MakeNews
 			this.Btn_Down.UseVisualStyleBackColor = true;
 			this.Btn_Down.Click += new System.EventHandler(this.Btn_Down_Click);
 			// 
-			// Btn_Up
+			// panel2
 			// 
-			this.Btn_Up.Location = new System.Drawing.Point(512, 3);
-			this.Btn_Up.Name = "Btn_Up";
-			this.Btn_Up.Size = new System.Drawing.Size(42, 23);
-			this.Btn_Up.TabIndex = 39;
-			this.Btn_Up.Text = "↑";
-			this.Btn_Up.UseVisualStyleBackColor = true;
-			this.Btn_Up.Click += new System.EventHandler(this.Btn_Up_Click);
+			this.panel2.Controls.Add(this.Btn_Setting);
+			this.panel2.Controls.Add(this.Bt_Setting);
+			this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel2.Location = new System.Drawing.Point(1298, 3);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(200, 191);
+			this.panel2.TabIndex = 38;
+			// 
+			// panel3
+			// 
+			this.panel3.Controls.Add(this.Bt_AddData);
+			this.panel3.Controls.Add(this.Btn_Change);
+			this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel3.Location = new System.Drawing.Point(1298, 200);
+			this.panel3.Name = "panel3";
+			this.panel3.Size = new System.Drawing.Size(200, 191);
+			this.panel3.TabIndex = 39;
+			// 
+			// panel4
+			// 
+			this.panel4.Controls.Add(this.btn_CopyHtml);
+			this.panel4.Controls.Add(this.Bt_CreatHtml);
+			this.panel4.Controls.Add(this.Bt_OpenHtml);
+			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.panel4.Location = new System.Drawing.Point(1298, 436);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(200, 349);
+			this.panel4.TabIndex = 40;
+			// 
+			// Btn_Setting
+			// 
+			this.Btn_Setting.Location = new System.Drawing.Point(0, 3);
+			this.Btn_Setting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Btn_Setting.Name = "Btn_Setting";
+			this.Btn_Setting.Size = new System.Drawing.Size(197, 57);
+			this.Btn_Setting.TabIndex = 32;
+			this.Btn_Setting.Text = "Application Setting";
+			this.Btn_Setting.UseVisualStyleBackColor = true;
+			this.Btn_Setting.Click += new System.EventHandler(this.Btn_Setting_Click);
+			// 
+			// btn_CopyHtml
+			// 
+			this.btn_CopyHtml.Location = new System.Drawing.Point(2, 124);
+			this.btn_CopyHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.btn_CopyHtml.Name = "btn_CopyHtml";
+			this.btn_CopyHtml.Size = new System.Drawing.Size(197, 57);
+			this.btn_CopyHtml.TabIndex = 39;
+			this.btn_CopyHtml.Text = "Copy HTML";
+			this.btn_CopyHtml.UseVisualStyleBackColor = true;
+			this.btn_CopyHtml.Click += new System.EventHandler(this.btn_CopyHtml_Click);
 			// 
 			// MainPage
 			// 
@@ -355,7 +383,7 @@ namespace MakeNews
 		private System.Windows.Forms.Button Bt_OpenHtml;
 		private System.Windows.Forms.Button Bt_AddData;
 		private System.Windows.Forms.Button Bt_CreatHtml;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button Btn_Change;
 		private System.Windows.Forms.DataGridView Dgv_History;
 		private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
 		private System.Windows.Forms.SplitContainer splitContainer1;
@@ -366,5 +394,7 @@ namespace MakeNews
 		private System.Windows.Forms.Panel panel4;
 		private System.Windows.Forms.Button Btn_Up;
 		private System.Windows.Forms.Button Btn_Down;
+		private System.Windows.Forms.Button Btn_Setting;
+		private System.Windows.Forms.Button btn_CopyHtml;
 	}
 }

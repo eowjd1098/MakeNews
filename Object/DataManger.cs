@@ -244,7 +244,7 @@ namespace MakeNews
 
 				while (rdr.Read()) 
 				{ 
-					data.Add(new Writing(ChangeBoolean((long)rdr["ImgUse"]), ChangeBoolean((long)rdr["PopupUse"]),(string)rdr["Emogi"],
+					data.Add(new Writing((int)((long)rdr["num"]),ChangeBoolean((long)rdr["ImgUse"]), ChangeBoolean((long)rdr["PopupUse"]),(string)rdr["Emogi"],
 						(string)rdr["Title"],(string)rdr["Contents"],(string)rdr["Url"],(string)rdr["ImgUrl"],(string)rdr["Category"], ChangeDate((string)rdr["Date"])[0], ChangeDate((string)rdr["Date"])[1], ChangeDate((string)rdr["Date"])[2], 
 						(string)rdr["PopupTitle"], (string)rdr["PopupImgSrc"], (string)rdr["PopupContent"]));
 				}
