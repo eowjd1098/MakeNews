@@ -14,21 +14,23 @@ namespace MakeNews
 	{
 		DataManger dm;// DataManger 전역 호출 용  
 
-		//Class Constructor
+		#region Constructor
 		public MainPage(DataManger _dm)
 		{
 			InitializeComponent();
 			dm = _dm;
 			dm.InitDataBase();
 		}
-		//Form Load Evnet
+		#endregion
+
+		#region Load Event
 		private void MainPage_Load(object sender, EventArgs e)
 		{
 			DgvReLoad();
 		}
+		#endregion
 
 		// TODO : Btn_Setting_Click Event 추가 필요
-		// TODO : Bt_Setting_Click Property 화 할지 고민 -> 현재 파일입출력
 		#region Setting Button Event
 		private void Btn_Setting_Click(object sender, EventArgs e)
 		{
@@ -45,31 +47,96 @@ namespace MakeNews
 		}
 		#endregion
 
-		// TODO : BtnChange_Click : Cell 확인 및 조건 파라매터 추가
 		// TODO : Btn_Up_Click,Btn_Down_Click :DM쪽에 쿼리 호출 함수 추가필요 및 조건 파라매터 추가
 		#region Item Button Event
 		private void Bt_AddData_Click(object sender, EventArgs e)
 		{
-			AddItemPage form = new AddItemPage(dm,"ADD Item");
+			AddItemPage form = new AddItemPage(dm,"Add Item");
 			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
 
 			form.ShowDialog();
 		}
 		private void BtnChange_Click(object sender, EventArgs e)
 		{
-			if (true) // 셀조건 걸어야함
+			Writing writing = new Writing();
+			 
+			if (Dgv_index_New.SelectedRows.Count == 1) // DGV 로우 선택 확인
 			{
-				AddItemPage form = new AddItemPage(dm,"Change Item");
-				form.FormClosed += new FormClosedEventHandler(MainPage_Load);
+				int rowIndex = Dgv_index_New.CurrentRow.Index;
+				int[] date = DateChange(((string)Dgv_index_New.Rows[rowIndex].Cells[9].Value));
 
-				form.ShowDialog();
+				writing.Index			= (int)Dgv_index_New.Rows[rowIndex].Cells[0].Value;
+				writing.Imge			= (bool)Dgv_index_New.Rows[rowIndex].Cells[1].Value;
+				writing.Popup			= (bool)Dgv_index_New.Rows[rowIndex].Cells[2].Value;
+				writing.Emogi			= Dgv_index_New.Rows[rowIndex].Cells[3].Value.ToString();
+				writing.Title			= Dgv_index_New.Rows[rowIndex].Cells[4].Value.ToString();
+				writing.Contents		= Dgv_index_New.Rows[rowIndex].Cells[5].Value.ToString();
+				writing.Url				= Dgv_index_New.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Imgsrc			= Dgv_index_New.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Category		= Dgv_index_New.Rows[rowIndex].Cells[8].Value.ToString();
+				writing.Year			= date[0];
+				writing.Month			= date[1];
+				writing.Day				= date[2];
+				writing.Popuptitile		= Dgv_index_New.Rows[rowIndex].Cells[10].Value.ToString();
+				writing.PopupImgSrc		= Dgv_index_New.Rows[rowIndex].Cells[11].Value.ToString();
+				writing.PopupContent	= Dgv_index_New.Rows[rowIndex].Cells[12].Value.ToString();
+
 			}
+			else if (Dgv_index_Info.SelectedRows.Count == 1) // DGV 로우 선택 확인
+			{
+				int rowIndex = Dgv_index_Info.CurrentRow.Index;
+				int[] date = DateChange(((string)Dgv_index_Info.Rows[rowIndex].Cells[9].Value));
+
+				writing.Index = (int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value;
+				writing.Imge = (bool)Dgv_index_Info.Rows[rowIndex].Cells[1].Value;
+				writing.Popup = (bool)Dgv_index_Info.Rows[rowIndex].Cells[2].Value;
+				writing.Emogi = Dgv_index_Info.Rows[rowIndex].Cells[3].Value.ToString();
+				writing.Title = Dgv_index_Info.Rows[rowIndex].Cells[4].Value.ToString();
+				writing.Contents = Dgv_index_Info.Rows[rowIndex].Cells[5].Value.ToString();
+				writing.Url = Dgv_index_Info.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Imgsrc = Dgv_index_Info.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Category = Dgv_index_Info.Rows[rowIndex].Cells[8].Value.ToString();
+				writing.Year = date[0];
+				writing.Month = date[1];
+				writing.Day = date[2];
+				writing.Popuptitile = Dgv_index_Info.Rows[rowIndex].Cells[10].Value.ToString();
+				writing.PopupImgSrc = Dgv_index_Info.Rows[rowIndex].Cells[11].Value.ToString();
+				writing.PopupContent = Dgv_index_Info.Rows[rowIndex].Cells[12].Value.ToString();
+			}
+			else if (Dgv_History.SelectedRows.Count == 1)// DGV 로우 선택 확인
+			{
+				int rowIndex = Dgv_History.CurrentRow.Index;
+				int[] date = DateChange(((string)Dgv_History.Rows[rowIndex].Cells[9].Value));
+
+				writing.Index = (int)Dgv_History.Rows[rowIndex].Cells[0].Value;
+				writing.Imge = (bool)Dgv_History.Rows[rowIndex].Cells[1].Value;
+				writing.Popup = (bool)Dgv_History.Rows[rowIndex].Cells[2].Value;
+				writing.Emogi = Dgv_History.Rows[rowIndex].Cells[3].Value.ToString();
+				writing.Title = Dgv_History.Rows[rowIndex].Cells[4].Value.ToString();
+				writing.Contents = Dgv_History.Rows[rowIndex].Cells[5].Value.ToString();
+				writing.Url = Dgv_History.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Imgsrc = Dgv_History.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Category = Dgv_History.Rows[rowIndex].Cells[8].Value.ToString();
+				writing.Year = date[0];
+				writing.Month = date[1];
+				writing.Day = date[2];
+				writing.Popuptitile = Dgv_History.Rows[rowIndex].Cells[10].Value.ToString();
+				writing.PopupImgSrc = Dgv_History.Rows[rowIndex].Cells[11].Value.ToString();
+				writing.PopupContent = Dgv_History.Rows[rowIndex].Cells[12].Value.ToString();
+			}
+
+			AddItemPage form = new AddItemPage(dm,"Change Item",writing);
+			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
+
+			form.ShowDialog();
 		}
 		private void Btn_Up_Click(object sender, EventArgs e)
 		{
 			if (Dgv_History.SelectedRows.Count == 1) // 로우 선택 확인
 			{
-				MessageBox.Show("test up click");
+				int rowIndex = Dgv_History.CurrentRow.Index;
+				dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value);
+				DgvReLoad();
 			}
 			else
 			{
@@ -80,11 +147,13 @@ namespace MakeNews
 		{
 			if (Dgv_index_New.SelectedRows.Count == 1) // 로우 선택 확인
 			{
-				MessageBox.Show("test Down1 click");
+				dm.UpdateSession();
+				DgvReLoad();
 			}
 			else if (Dgv_index_Info.SelectedRows.Count == 1)
 			{
-				MessageBox.Show("test Down2 click");
+				dm.UpdateSession();
+				DgvReLoad();
 			}
 			else
 			{
@@ -135,7 +204,6 @@ namespace MakeNews
 		}
 		#endregion
 
-		// TODO : Delet 기능 추가 필요
 		#region Data Grid View Cell Event
 		private void Dgv_index_Info_CellClick(object sender, DataGridViewCellEventArgs e)
 		{
@@ -145,8 +213,13 @@ namespace MakeNews
 			//delete 시
 			if (e.ColumnIndex == Dgv_index_Info.Columns["Delete"].Index)
 			{
-				DeleteRow(1);
-				DgvReLoad();
+				DialogResult result  = MessageBox.Show("Do you want to delete?","Delete",MessageBoxButtons.OKCancel);
+				if (result == DialogResult.OK) 
+				{
+					int rowIndex = Dgv_index_Info.CurrentRow.Index;
+					dm.DeleteInfo((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value);
+					DgvReLoad();
+				}
 			}
 		}
 		private void Dgv_index_New_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -155,10 +228,16 @@ namespace MakeNews
 			Dgv_index_Info.ClearSelection();
 
 			//delete 시
+			
 			if (e.ColumnIndex == Dgv_index_New.Columns["Delete"].Index)
 			{
-				DeleteRow(2);
-				DgvReLoad();
+				DialogResult result  = MessageBox.Show("Do you want to delete?","Delete",MessageBoxButtons.OKCancel);
+				if (result == DialogResult.OK)
+				{
+					int rowIndex = Dgv_index_New.CurrentRow.Index;
+					dm.DeleteInfo((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value);
+					DgvReLoad();
+				}
 			}
 		}
 		private void Dgv_History_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -166,14 +245,16 @@ namespace MakeNews
 			Dgv_index_New.ClearSelection();
 			Dgv_index_Info.ClearSelection();
 
-
-			
 			//delete 시
 			if (e.ColumnIndex == Dgv_History.Columns["Delete"].Index)
 			{
-				//Dgv_History[e.RowIndex];
-				DeleteRow(3);
-				DgvReLoad();
+				DialogResult result  = MessageBox.Show("Do you want to delete?","Delete",MessageBoxButtons.OKCancel);
+				if (result == DialogResult.OK)
+				{
+					int rowIndex = Dgv_History.CurrentRow.Index;
+					dm.DeleteInfo((int)Dgv_History.Rows[rowIndex].Cells[0].Value);
+					DgvReLoad();
+				}
 			}
 		}
 		#endregion
@@ -208,23 +289,30 @@ namespace MakeNews
 			dataGridView.Columns.Add("c3", "Emoji");
 			dataGridView.Columns.Add("c4", "Title");
 			dataGridView.Columns.Add("c5", "Contents");
-			dataGridView.Columns.Add("c6", "Img Src");
-			dataGridView.Columns.Add("c7", "Category");
-			dataGridView.Columns.Add("c8", "Date");
-			dataGridView.Columns.Add("c9", "Pop up Title");
-			dataGridView.Columns.Add("c10", "Pop up Img Src");
-			dataGridView.Columns.Add("c11", "Pop up Contents");
+			dataGridView.Columns.Add("c7", "Img Src");
+			dataGridView.Columns.Add("c8", "URL");
+			dataGridView.Columns.Add("c9", "Category");
+			dataGridView.Columns.Add("c10", "Date");
+			dataGridView.Columns.Add("c11", "Pop up Title");
+			dataGridView.Columns.Add("c12", "Pop up Img Src");
+			dataGridView.Columns.Add("c13", "Pop up Contents");
 			dataGridView.Columns.Add(buttonColumn);
 
 			foreach (Writing item in data)
 			{
-				dataGridView.Rows.Add(item.Index,item.Imge, item.Popup, item.Emogi, item.Title, item.Contents, item.Imgsrc, item.Category, item.GetDate(), item.Popuptitile, item.PopupImgSrc, item.PopupContent, "Delete");
+				dataGridView.Rows.Add(item.Index,item.Imge, item.Popup, item.Emogi, item.Title, item.Contents, item.Imgsrc,item.Url, item.Category, item.GetDate(), item.Popuptitile, item.PopupImgSrc, item.PopupContent, "Delete");
 			}
 
 		}
-		private void DeleteRow(int num)
+		 
+		private int[] DateChange(string data) 
 		{
-		
+			string[] dateArray = data.Split('-');
+			int[] date = new int[3];
+			date[0] = int.Parse(dateArray[0]);
+			date[1] = int.Parse(dateArray[1]);
+			date[2] = int.Parse(dateArray[2]);
+			return date;
 		}
 		#endregion
 		

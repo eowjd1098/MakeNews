@@ -21,6 +21,9 @@
 			PopupImgSrc = popupImgSrc;
 			PopupContent = popupContent;
 		}
+
+		public Writing() 
+		{ }
 		#endregion
 
 		#region Properti

@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using System.Drawing.Text;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace MakeNews
 {
@@ -374,7 +372,5 @@ $('.btn_wrap a').click(function () {
 			return text;
 		}
 		#endregion
-
-
 	}
 }

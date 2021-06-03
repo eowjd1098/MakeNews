@@ -7,12 +7,14 @@ namespace MakeNews
 	public partial class AddItemPage: Form
 	{
 		DataManger dm;
+		Writing changeData;
+		#region Constructor
 		public AddItemPage(DataManger _dm,string btntext)
 		{
 			InitializeComponent();
 			dm = _dm;
 
-			Text = btntext+"Page";
+			Text = btntext+" Page";
 			Bt_Change.Text = btntext;
 			Tb_Emogi.Enabled = true;
 			Tb_imgsrc.Enabled = false;
@@ -20,8 +22,41 @@ namespace MakeNews
 			Tb_PoupContent.Enabled = false;
 			Tb_PoupImgPath.Enabled = false;
 			Bt_CopyContent.Enabled = false;
+		}
+
+		public AddItemPage(DataManger _dm, string btntext, Writing writing)
+		{
+			InitializeComponent();
+			dm = _dm;
+
+			Text = btntext + " Page";
+			Bt_Change.Text = btntext;
+			Tb_Emogi.Enabled = true;
+			Tb_imgsrc.Enabled = false;
+			Tb_PoupTitle.Enabled = false;
+			Tb_PoupContent.Enabled = false;
+			Tb_PoupImgPath.Enabled = false;
+			Bt_CopyContent.Enabled = false;
+			changeData = writing;
+
+			Cb_PopupUse.Checked = writing.Popup;
+			Cb_ImageUse.Checked = writing.Imge;
+			Tb_Emogi.Text		=  writing.Emogi;
+			Tb_Title.Text		=  writing.Title;
+			Tb_Content.Text		=  writing.Contents;
+			Tb_Url.Text			=  writing.Url;
+			Tb_imgsrc.Text		=  writing.Imgsrc;
+			Tb_Catagory.Text	=  writing.Category;
+			Tb_year.Text		=  writing.Year.ToString();
+			Tb_mount.Text		=  writing.Month.ToString();
+			Tb_Day.Text			=  writing.Day.ToString();
+			Tb_PoupTitle.Text	=  writing.Popuptitile;
+			Tb_PoupImgPath.Text =  writing.PopupImgSrc;
+			Tb_PoupContent.Text =  writing.PopupContent;
+			 
 
 		}
+		#endregion
 
 		#region Form Event 부
 		private void Bt_CopyContent_Click(object sender, EventArgs e)
@@ -96,7 +131,21 @@ namespace MakeNews
 			}
 			#endregion
 
-			dm.InsertInfo( new Writing(0,ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
+			if (Bt_Change.Text == "Change Item")
+			{
+				int beforesession = dm.SelectSession(changeData.Index);
+
+				dm.UpdateInfo(new Writing(changeData.Index, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text), beforesession); 
+			}
+			else if (Bt_Change.Text == "Add Item")
+			{
+				dm.InsertInfo(new Writing(0, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
+			}
+			else 
+			{
+				MessageBox.Show("Error Form");
+			}
+
 			MessageBox.Show("Complete");
 		}
 		private void Bt_Cancel_Click(object sender, EventArgs e)
@@ -215,7 +264,7 @@ namespace MakeNews
 					message += "년 항목 X\n";
 				}
 
-				if (!int.TryParse(Tb_year.Text, out int a))
+				if (!int.TryParse(Tb_year.Text, out _))
 				{
 					message += "년 항목 숫자입력\n";
 				}
@@ -227,7 +276,8 @@ namespace MakeNews
 				{
 					message += "월 항목 X\n";
 				}
-				if (!int.TryParse(Tb_mount.Text, out int a))
+
+				if (!int.TryParse(Tb_mount.Text, out _))
 				{
 					message += "월 항목 숫자입력\n";
 				}
@@ -238,7 +288,8 @@ namespace MakeNews
 				{
 					message += "일 항목 X\n";
 				}
-				if (!int.TryParse(Tb_Day.Text, out int a))
+
+				if (!int.TryParse(Tb_Day.Text, out _))
 				{
 					message += "일 항목 숫자입력\n";
 				}
@@ -271,7 +322,5 @@ namespace MakeNews
 			return message;
 		}
 		#endregion
-
-
 	}
 }

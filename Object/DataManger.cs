@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
@@ -23,7 +24,7 @@ namespace MakeNews
 		}
 		#endregion
 
-		#region 고정형 텍스트
+		#region 고정형 텍스트 관리 
 		public FixText GetFixText(string path)
 		{
 			if (!File.Exists(path))
@@ -100,129 +101,239 @@ namespace MakeNews
 			}
 		}
 
-		//public void InsertInfo(Writing writing)
-		//{
-		//	// 추가중 세션별로 꽉 차있는경우에 역으로 검색 하여 처음 들어온 값에 세션을검색 업데이트후 인서트 
-		//	string sql = string.Empty;
-		//	int session = 1;
-		//	int result = -1;
-		//	SQLiteCommand command;
-		//	if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
-		//	{
-		//		result = (int)SelectCountSession(session);
-		//		if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
-		//		{
-		//			System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Insert");
-		//			return;
-		//		} 
-		//		else if (result >= 6) 
-		//		{
-		//			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
-		//			{
-		//				conn.Open();
-		//				sql = "SELECT * FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
-		//				command = new SQLiteCommand(sql, conn);
-		//				SQLiteDataReader rdr = command.ExecuteReader();
-		//				int key = (int)rdr["num"];
-		//				rdr.Close();
-		//
-		//				//Updata
-		//				sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
-		//				command = new SQLiteCommand(sql, conn);
-		//				result = (int)command.ExecuteNonQuery();
-		//				
-		//				conn.Close();
-		//			}
-		//			
-		//			if (result < 0) 
-		//			{
-		//				System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Update");
-		//				return;
-		//			}
-		//		}
-		//	}
-		//	else //팝업이있음 = 정보 일경우
-		//	{
-		//		result = (int)SelectCountSession(++session);
-		//		if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
-		//		{
-		//			System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Insert");
-		//			return;
-		//		}
-		//		else if (result >= 2)
-		//		{
-		//			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
-		//			{
-		//				conn.Open();
-		//				sql = "SELECT * FROM Data WHERE Session = 2 ORDER BY Num ASC LIMIT 1";
-		//				command = new SQLiteCommand(sql, conn);
-		//				SQLiteDataReader rdr = command.ExecuteReader();
-		//				int key = (int)rdr["num"];
-		//				rdr.Close();
-		//
-		//				//Updata
-		//				sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
-		//				command = new SQLiteCommand(sql, conn);
-		//				result = (int)command.ExecuteNonQuery();
-		//				conn.Close();
-		//			}
-		//			if (result < 0)
-		//			{
-		//				System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Update");
-		//				return;
-		//			}
-		//		}
-		//	}
-		//	
-		//	using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
-		//	{
-		//		conn.Open();
-		//		sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
-		//					VALUES ("+session+","+writing.Imge + "," +writing.Popup+",'"+writing.Emogi+"','"+writing.Title+"','"+writing.Contents+"','"+writing.Url+"','"+writing.Imgsrc+"','" + writing.Category + "','" + writing.GetDate() +"','"
-		//					+writing.Popuptitile +"','"+writing.PopupImgSrc+"','"+writing.PopupContent +"')";
-		//		command = new SQLiteCommand(sql, conn);
-		//		result = command.ExecuteNonQuery();
-		//		conn.Close();
-		//	}
-		//
-		//	if (result < 0)
-		//	{
-		//		System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Insert");
-		//		return;
-		//	}
-		//	 
-		//}
-
 		public void InsertInfo(Writing writing)
 		{
-			int session = -1;
-			
+			// 추가중 세션별로 꽉 차있는경우에 역으로 검색 하여 처음 들어온 값에 세션을검색 업데이트후 인서트 
+			string sql = string.Empty;
+			int session = 1;
+			int result = -1;
+			SQLiteCommand command;
 			if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
 			{
-				session = 1;
+				result = (int)SelectCountSession(session);
+				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				{
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Insert");
+					return;
+				} 
+				else if (result >= 6) 
+				{
+					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+					{
+						conn.Open();
+						sql = "SELECT * FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
+						command = new SQLiteCommand(sql, conn);
+						SQLiteDataReader rdr = command.ExecuteReader();
+						int key = (int)rdr["num"];
+						rdr.Close();
+		
+						//Updata
+						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
+						command = new SQLiteCommand(sql, conn);
+						result = (int)command.ExecuteNonQuery();
+						
+						conn.Close();
+					}
+					
+					if (result < 0) 
+					{
+						System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Update");
+						return;
+					}
+				}
 			}
 			else //팝업이있음 = 정보 일경우
 			{
-				session = 2;
+				result = (int)SelectCountSession(++session);
+				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				{
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Insert");
+					return;
+				}
+				else if (result >= 2)
+				{
+					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+					{
+						conn.Open();
+						sql = "SELECT * FROM Data WHERE Session = 2 ORDER BY Num ASC LIMIT 1";
+						command = new SQLiteCommand(sql, conn);
+						SQLiteDataReader rdr = command.ExecuteReader();
+						int key = (int)rdr["num"];
+						rdr.Close();
+		
+						//Updata
+						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
+						command = new SQLiteCommand(sql, conn);
+						result = (int)command.ExecuteNonQuery();
+						conn.Close();
+					}
+					if (result < 0)
+					{
+						System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Update");
+						return;
+					}
+				}
+			}
+			
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
+							VALUES ("+session+","+writing.Imge + "," +writing.Popup+",'"+writing.Emogi+"','"+writing.Title+"','"+writing.Contents+"','"+writing.Url+"','"+writing.Imgsrc+"','" + writing.Category + "','" + writing.GetDate() +"','"
+							+writing.Popuptitile +"','"+writing.PopupImgSrc+"','"+writing.PopupContent +"')";
+				command = new SQLiteCommand(sql, conn);
+				result = command.ExecuteNonQuery();
+				conn.Close();
+			}
+		
+			if (result < 0)
+			{
+				System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Insert");
+				return;
+			}
+			 
+		}
+		//public void InsertInfo(Writing writing)
+		//{
+		//	int session = -1;
+		//	
+		//	if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
+		//	{
+		//		session = 1;
+		//	}
+		//	else //팝업이있음 = 정보 일경우
+		//	{
+		//		session = 2;
+		//	}
+		//
+		//	using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+		//	{
+		//		conn.Open();
+		//		string sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
+		//					VALUES (" + session + "," + writing.Imge + "," + writing.Popup + ",'" + writing.Emogi + "','" + writing.Title + "','" + writing.Contents + "','" + writing.Url + "','" + writing.Imgsrc + "','" + writing.Category + "','" + writing.GetDate() + "','"
+		//					+ writing.Popuptitile + "','" + writing.PopupImgSrc + "','" + writing.PopupContent + "')";
+		//		SQLiteCommand command = new SQLiteCommand(sql, conn);
+		//		int result = command.ExecuteNonQuery();
+		//		conn.Close();
+		//
+		//		if (result < 0)
+		//		{
+		//			System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Insert");
+		//		}
+		//	}
+		//}
+		public void UpdateInfo(Writing writing,int beforeSession) 
+		{
+			int ChangeSession = 3;
+
+			if (beforeSession == 1) // 기존 1번인데
+			{
+				if (writing.Popup.Equals(true))// 2번으로 변경하는경우
+				{
+					if (SelectCountSession(2) < 2)//체크후 2개이상이면 3으로 변경
+					{
+						ChangeSession = 2;
+					}
+				}
+				else
+				{
+					ChangeSession = beforeSession;
+				}
+			}
+			else if (beforeSession == 2) 
+			{
+				if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
+				{
+					// Session 이 2-> 1 으로 변경 되는 경우 = 체크후 6개이상이면 3으로 변경 
+					if (SelectCountSession(1) < 6)
+					{
+						ChangeSession = 1;
+					}
+				} 
+				else
+				{
+					ChangeSession = beforeSession;
+				}
+			}
+			else //Session 이 3 이면 그대로 사용
+			{
+				ChangeSession = 3;
 			}
 
 			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 			{
 				conn.Open();
-				string sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
-							VALUES (" + session + "," + writing.Imge + "," + writing.Popup + ",'" + writing.Emogi + "','" + writing.Title + "','" + writing.Contents + "','" + writing.Url + "','" + writing.Imgsrc + "','" + writing.Category + "','" + writing.GetDate() + "','"
-							+ writing.Popuptitile + "','" + writing.PopupImgSrc + "','" + writing.PopupContent + "')";
+				string sql = @"UPDATE Data SET  Session = "+ChangeSession+",ImgUse = "+writing.Imge+",PopupUse ="+writing.Popup+",Emogi ='"+writing.Emogi+"',Title='"+ writing.Title +"',Contents='"+writing.Contents+"',Url='"+writing.Url+"',ImgUrl='"+writing.Imgsrc+"',Category='"+ writing.Category
+					+"',Date='"+writing.GetDate()+"',PopupTitle='"+writing.Popuptitile+"',PopupImgSrc='"+writing.PopupImgSrc+"',PopupContent='"+writing.PopupContent+"' where Num="+writing.Index;
 				SQLiteCommand command = new SQLiteCommand(sql, conn);
 				int result = command.ExecuteNonQuery();
 				conn.Close();
 
 				if (result < 0)
 				{
-					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Insert");
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Update");
+				}
+			}
+		}
+		public void DeleteInfo(int num) 
+		{
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				string sql = "DELETE FROM Data WHERE Num ="+num;
+				SQLiteCommand command = new SQLiteCommand(sql, conn);
+				int result = command.ExecuteNonQuery();
+				conn.Close();
+
+				if (result < 0)
+				{
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Delete");
+				}
+			}
+			
+		}
+		public void UpdateSession(int beforsession,int num) 
+		{
+			switch (beforsession)
+			{
+				case 1:break;
+				case 1: break;
+				case 1: break;
+				default:
+					break;
+			}
+
+			//변경할 Session Type 확인
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				string sql = "UPDATE Data SET Session = 1or2 where num="+num;
+				SQLiteCommand command = new SQLiteCommand(sql, conn);
+				int result = command.ExecuteNonQuery();
+				conn.Close();
+
+				if (result < 0)
+				{
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Delete");
 				}
 			}
 		}
 
+
+		public int SelectSession(int index) 
+		{
+			int beforSession =3;
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				string sql = "SELECT Session FROM Data WHERE Num="+index;
+				SQLiteCommand command = new SQLiteCommand(sql, conn);
+
+				beforSession = (int)((long)command.ExecuteScalar());
+				conn.Close();
+			}
+			return beforSession;
+		}
 		public List<Writing> SelectData(int num) 
 		{
 			List < Writing > data = new List<Writing>();
@@ -234,7 +345,8 @@ namespace MakeNews
 				{
 					case 1: sql = "SELECT * FROM Data WHERE Session=1 ORDER By Num DESC LIMIT 6";break;
 					case 2: sql = "SELECT * FROM Data WHERE Session=2 ORDER By Num DESC LIMIT 2"; break;
-					case 3: sql = "SELECT * FROM Data WHERE Num Not IN (SELECT Num FROM Data WHERE Session=1 ORDER BY Num DESC LIMIT 6) AND Num Not IN (SELECT Num FROM Data WHERE Session=2 ORDER BY Num DESC LIMIT 2)"; break;
+					case 3: sql = "SELECT * FROM Data WHERE Session=3 ORDER By Num DESC"; break;
+					//case 3: sql = "SELECT * FROM Data WHERE Num Not IN (SELECT Num FROM Data WHERE Session=1 ORDER BY Num DESC LIMIT 6) AND Num Not IN (SELECT Num FROM Data WHERE Session=2 ORDER BY Num DESC LIMIT 2)"; break;
 					default:
 						break;
 				}
@@ -254,6 +366,24 @@ namespace MakeNews
 
 			return data;
 		}
+		public int SelectCountSession(int sessiontype) 
+		{
+			long read = -1;
+			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
+			{
+				conn.Open();
+				string sql = "SELECT count(Session) FROM Data WHERE Session="+sessiontype;
+				SQLiteCommand cmd = new SQLiteCommand(sql, conn);
+				read = (long)cmd.ExecuteScalar();
+				conn.Close();
+			}
+			return (int)read;
+		}
+
+		public void ResetDataBase()
+		{
+
+		}
 
 		#region ect funtion
 		public bool ChangeBoolean(long dbdata) 
@@ -267,7 +397,6 @@ namespace MakeNews
 				return true;
 			}
 		}
-
 		public string[] ChangeDate(string date) 
 		{
 			string [] da = date.Split('-');
@@ -275,39 +404,9 @@ namespace MakeNews
 		}
 		#endregion
 
-		public void UpdateInfo() 
-		{
-		
-		}
-
-		public void DeleteInfo() 
-		{
-		}
-
-		public void ResetDataBase() 
-		{
-			
-		}
-		 
-		//public long SelectCountSession(int sessiontype) 
-		//{
-		//	long read = -1;
-		//	using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
-		//	{
-		//		conn.Open();
-		//		string sql = "SELECT count(Session) FROM Data WHERE Session="+sessiontype;
-		//		SQLiteCommand cmd = new SQLiteCommand(sql, conn);
-		//		read = (long)cmd.ExecuteScalar();
-		//		conn.Close();
-		//	}
-		//	return read;
-		//}
-
-
 		#endregion
 
-
-
+		#region CSV 관리
 		public void SaveInfotoCSV(string path, Writing writing)
 		{
 			if (!File.Exists(path))
@@ -329,7 +428,9 @@ namespace MakeNews
 				}
 			}
 		}
+		#endregion
 
+		#region Html 관리
 		public void CreateHtml(string indexPath, string historyPath, string dataPath)
 		{
 			FixText fixText = GetFixText(Common.fixdataPath);
@@ -385,5 +486,6 @@ namespace MakeNews
 			}
 
 		}
+		#endregion
 	}
 }

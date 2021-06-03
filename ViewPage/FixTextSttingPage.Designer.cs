@@ -54,7 +54,7 @@ namespace MakeNews
 			this.Bt_Change.Location = new System.Drawing.Point(720, 240);
 			this.Bt_Change.Name = "Bt_Change";
 			this.Bt_Change.Size = new System.Drawing.Size(80, 49);
-			this.Bt_Change.TabIndex = 0;
+			this.Bt_Change.TabIndex = 6;
 			this.Bt_Change.Text = "Change";
 			this.Bt_Change.UseVisualStyleBackColor = true;
 			this.Bt_Change.Click += new System.EventHandler(this.Bt_Change_Click);
@@ -65,7 +65,7 @@ namespace MakeNews
 			this.Bt_Cancel.Location = new System.Drawing.Point(806, 240);
 			this.Bt_Cancel.Name = "Bt_Cancel";
 			this.Bt_Cancel.Size = new System.Drawing.Size(80, 49);
-			this.Bt_Cancel.TabIndex = 9;
+			this.Bt_Cancel.TabIndex = 7;
 			this.Bt_Cancel.Text = "Cancel";
 			this.Bt_Cancel.UseVisualStyleBackColor = true;
 			this.Bt_Cancel.Click += new System.EventHandler(this.Bt_Cancel_Click);
@@ -100,7 +100,7 @@ namespace MakeNews
 			this.Tb_IndexCoverPTag.Location = new System.Drawing.Point(108, 47);
 			this.Tb_IndexCoverPTag.Name = "Tb_IndexCoverPTag";
 			this.Tb_IndexCoverPTag.Size = new System.Drawing.Size(760, 21);
-			this.Tb_IndexCoverPTag.TabIndex = 10;
+			this.Tb_IndexCoverPTag.TabIndex = 2;
 			// 
 			// label5
 			// 
@@ -116,7 +116,7 @@ namespace MakeNews
 			this.Tb_IndexHeadTitile.Location = new System.Drawing.Point(108, 19);
 			this.Tb_IndexHeadTitile.Name = "Tb_IndexHeadTitile";
 			this.Tb_IndexHeadTitile.Size = new System.Drawing.Size(760, 21);
-			this.Tb_IndexHeadTitile.TabIndex = 4;
+			this.Tb_IndexHeadTitile.TabIndex = 1;
 			// 
 			// label4
 			// 
@@ -132,7 +132,7 @@ namespace MakeNews
 			this.Tb_IndexCopy.Location = new System.Drawing.Point(108, 98);
 			this.Tb_IndexCopy.Name = "Tb_IndexCopy";
 			this.Tb_IndexCopy.Size = new System.Drawing.Size(760, 21);
-			this.Tb_IndexCopy.TabIndex = 8;
+			this.Tb_IndexCopy.TabIndex = 3;
 			// 
 			// label1
 			// 
@@ -171,7 +171,7 @@ namespace MakeNews
 			this.Tb_Lst_wrapH2.Location = new System.Drawing.Point(108, 50);
 			this.Tb_Lst_wrapH2.Name = "Tb_Lst_wrapH2";
 			this.Tb_Lst_wrapH2.Size = new System.Drawing.Size(760, 21);
-			this.Tb_Lst_wrapH2.TabIndex = 16;
+			this.Tb_Lst_wrapH2.TabIndex = 5;
 			// 
 			// label10
 			// 
@@ -187,7 +187,7 @@ namespace MakeNews
 			this.Tb_HistoryTitle.Location = new System.Drawing.Point(108, 20);
 			this.Tb_HistoryTitle.Name = "Tb_HistoryTitle";
 			this.Tb_HistoryTitle.Size = new System.Drawing.Size(760, 21);
-			this.Tb_HistoryTitle.TabIndex = 15;
+			this.Tb_HistoryTitle.TabIndex = 4;
 			// 
 			// label7
 			// 
@@ -203,6 +203,7 @@ namespace MakeNews
 			this.AcceptButton = this.Bt_Change;
 			this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.CancelButton = this.Bt_Cancel;
 			this.ClientSize = new System.Drawing.Size(895, 300);
 			this.ControlBox = false;
@@ -212,6 +213,7 @@ namespace MakeNews
 			this.Controls.Add(this.Bt_Cancel);
 			this.Controls.Add(this.Bt_Change);
 			this.Cursor = System.Windows.Forms.Cursors.Default;
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Name = "FixTextSttingPage";
 			this.Text = "Fix Text Setting";
 			this.groupBox1.ResumeLayout(false);

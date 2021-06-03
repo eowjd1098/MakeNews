@@ -114,7 +114,7 @@ namespace MakeNews
 			this.Tb_Catagory.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_Catagory.Name = "Tb_Catagory";
 			this.Tb_Catagory.Size = new System.Drawing.Size(518, 21);
-			this.Tb_Catagory.TabIndex = 6;
+			this.Tb_Catagory.TabIndex = 8;
 			// 
 			// Tb_Emogi
 			// 
@@ -122,7 +122,7 @@ namespace MakeNews
 			this.Tb_Emogi.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_Emogi.Name = "Tb_Emogi";
 			this.Tb_Emogi.Size = new System.Drawing.Size(126, 21);
-			this.Tb_Emogi.TabIndex = 8;
+			this.Tb_Emogi.TabIndex = 3;
 			// 
 			// label1
 			// 
@@ -148,7 +148,7 @@ namespace MakeNews
 			this.Tb_Url.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_Url.Name = "Tb_Url";
 			this.Tb_Url.Size = new System.Drawing.Size(518, 21);
-			this.Tb_Url.TabIndex = 11;
+			this.Tb_Url.TabIndex = 6;
 			// 
 			// label3
 			// 
@@ -165,7 +165,7 @@ namespace MakeNews
 			this.Tb_imgsrc.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_imgsrc.Name = "Tb_imgsrc";
 			this.Tb_imgsrc.Size = new System.Drawing.Size(518, 21);
-			this.Tb_imgsrc.TabIndex = 13;
+			this.Tb_imgsrc.TabIndex = 7;
 			// 
 			// label4
 			// 
@@ -182,7 +182,7 @@ namespace MakeNews
 			this.Tb_year.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_year.Name = "Tb_year";
 			this.Tb_year.Size = new System.Drawing.Size(53, 21);
-			this.Tb_year.TabIndex = 15;
+			this.Tb_year.TabIndex = 9;
 			// 
 			// label5
 			// 
@@ -199,7 +199,7 @@ namespace MakeNews
 			this.Tb_mount.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_mount.Name = "Tb_mount";
 			this.Tb_mount.Size = new System.Drawing.Size(53, 21);
-			this.Tb_mount.TabIndex = 16;
+			this.Tb_mount.TabIndex = 10;
 			// 
 			// Tb_Day
 			// 
@@ -207,7 +207,7 @@ namespace MakeNews
 			this.Tb_Day.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_Day.Name = "Tb_Day";
 			this.Tb_Day.Size = new System.Drawing.Size(53, 21);
-			this.Tb_Day.TabIndex = 17;
+			this.Tb_Day.TabIndex = 11;
 			// 
 			// Cb_ImageUse
 			// 
@@ -216,7 +216,7 @@ namespace MakeNews
 			this.Cb_ImageUse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Cb_ImageUse.Name = "Cb_ImageUse";
 			this.Cb_ImageUse.Size = new System.Drawing.Size(75, 16);
-			this.Cb_ImageUse.TabIndex = 19;
+			this.Cb_ImageUse.TabIndex = 1;
 			this.Cb_ImageUse.Text = "IMG USE";
 			this.Cb_ImageUse.UseVisualStyleBackColor = true;
 			this.Cb_ImageUse.CheckedChanged += new System.EventHandler(this.Cb_ImageUse_CheckedChanged);
@@ -228,7 +228,7 @@ namespace MakeNews
 			this.Cb_PopupUse.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
 			this.Cb_PopupUse.Name = "Cb_PopupUse";
 			this.Cb_PopupUse.Size = new System.Drawing.Size(94, 16);
-			this.Cb_PopupUse.TabIndex = 20;
+			this.Cb_PopupUse.TabIndex = 2;
 			this.Cb_PopupUse.Text = "Pop UP USE";
 			this.Cb_PopupUse.UseVisualStyleBackColor = true;
 			this.Cb_PopupUse.CheckedChanged += new System.EventHandler(this.Cb_PopupUse_CheckedChanged);
@@ -239,7 +239,7 @@ namespace MakeNews
 			this.Tb_PoupTitle.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_PoupTitle.Name = "Tb_PoupTitle";
 			this.Tb_PoupTitle.Size = new System.Drawing.Size(518, 21);
-			this.Tb_PoupTitle.TabIndex = 24;
+			this.Tb_PoupTitle.TabIndex = 12;
 			// 
 			// label7
 			// 
@@ -256,7 +256,7 @@ namespace MakeNews
 			this.Tb_PoupImgPath.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Tb_PoupImgPath.Name = "Tb_PoupImgPath";
 			this.Tb_PoupImgPath.Size = new System.Drawing.Size(518, 21);
-			this.Tb_PoupImgPath.TabIndex = 26;
+			this.Tb_PoupImgPath.TabIndex = 13;
 			// 
 			// label8
 			// 
@@ -274,7 +274,7 @@ namespace MakeNews
 			this.Tb_PoupContent.Multiline = true;
 			this.Tb_PoupContent.Name = "Tb_PoupContent";
 			this.Tb_PoupContent.Size = new System.Drawing.Size(518, 68);
-			this.Tb_PoupContent.TabIndex = 28;
+			this.Tb_PoupContent.TabIndex = 14;
 			// 
 			// label9
 			// 
@@ -291,7 +291,7 @@ namespace MakeNews
 			this.Bt_CopyContent.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
 			this.Bt_CopyContent.Name = "Bt_CopyContent";
 			this.Bt_CopyContent.Size = new System.Drawing.Size(131, 29);
-			this.Bt_CopyContent.TabIndex = 29;
+			this.Bt_CopyContent.TabIndex = 15;
 			this.Bt_CopyContent.Text = "Main Text Copy";
 			this.Bt_CopyContent.UseVisualStyleBackColor = true;
 			this.Bt_CopyContent.Click += new System.EventHandler(this.Bt_CopyContent_Click);
@@ -344,7 +344,7 @@ namespace MakeNews
 			this.Bt_Cancel.Location = new System.Drawing.Point(552, 654);
 			this.Bt_Cancel.Name = "Bt_Cancel";
 			this.Bt_Cancel.Size = new System.Drawing.Size(80, 49);
-			this.Bt_Cancel.TabIndex = 33;
+			this.Bt_Cancel.TabIndex = 17;
 			this.Bt_Cancel.Text = "Cancel";
 			this.Bt_Cancel.UseVisualStyleBackColor = true;
 			this.Bt_Cancel.Click += new System.EventHandler(this.Bt_Cancel_Click);
@@ -354,7 +354,7 @@ namespace MakeNews
 			this.Bt_Change.Location = new System.Drawing.Point(466, 654);
 			this.Bt_Change.Name = "Bt_Change";
 			this.Bt_Change.Size = new System.Drawing.Size(80, 49);
-			this.Bt_Change.TabIndex = 32;
+			this.Bt_Change.TabIndex = 16;
 			this.Bt_Change.Text = "Change";
 			this.Bt_Change.UseVisualStyleBackColor = true;
 			this.Bt_Change.Click += new System.EventHandler(this.Bt_Change_Click);
@@ -370,7 +370,10 @@ namespace MakeNews
 			// 
 			// AddItemPage
 			// 
+			this.AcceptButton = this.Bt_Change;
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+			this.CancelButton = this.Bt_Cancel;
 			this.ClientSize = new System.Drawing.Size(644, 714);
 			this.ControlBox = false;
 			this.Controls.Add(this.label6);
@@ -380,9 +383,13 @@ namespace MakeNews
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.Cb_ImageUse);
 			this.Controls.Add(this.Cb_PopupUse);
+			this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
 			this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.MaximizeBox = false;
+			this.MinimizeBox = false;
 			this.Name = "AddItemPage";
 			this.Text = "Add Item Page";
+			this.TopMost = true;
 			this.groupBox1.ResumeLayout(false);
 			this.groupBox1.PerformLayout();
 			this.groupBox2.ResumeLayout(false);

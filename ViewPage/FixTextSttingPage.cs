@@ -8,6 +8,8 @@ namespace MakeNews
 	public partial class FixTextSttingPage: Form
 	{
 		DataManger dm;
+		
+		#region Constructor
 		public FixTextSttingPage(DataManger _dm)
 		{
 			InitializeComponent();			
@@ -21,12 +23,13 @@ namespace MakeNews
 			Tb_HistoryTitle.Text = text.HistoryHead;
 			Tb_Lst_wrapH2.Text = text.HistoryH2;
 		}
+		#endregion
 
+		#region Button Evnet
 		private void Bt_Change_Click(object sender, EventArgs e)
 		{
 			FixText text = new FixText(Tb_IndexHeadTitile.Text,Tb_IndexCoverPTag.Text,Tb_IndexCopy.Text,Tb_HistoryTitle.Text,Tb_Lst_wrapH2.Text);
 			dm.SetFixText(Common.fixdataPath, text);
-
 			this.Close();
 		}
 
@@ -34,5 +37,6 @@ namespace MakeNews
 		{
 			this.Close();
 		}
+		#endregion
 	}
 }
