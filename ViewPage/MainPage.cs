@@ -13,6 +13,10 @@ namespace MakeNews
 	/// </summary>
 	public partial class MainPage: Form
 	{
+		List<Writing> news;
+		List<Writing> info;
+		List<Writing> history;
+
 		DataManger dm;// DataManger 전역 호출 용  
 
 		#region Constructor
@@ -48,7 +52,6 @@ namespace MakeNews
 		}
 		#endregion
 
-		// TODO : Btn_Up_Click,Btn_Down_Click :DM쪽에 쿼리 호출 함수 추가필요 및 조건 파라매터 추가
 		#region Item Button Event
 		private void Bt_AddData_Click(object sender, EventArgs e)
 		{
@@ -60,27 +63,27 @@ namespace MakeNews
 		private void BtnChange_Click(object sender, EventArgs e)
 		{
 			Writing writing = new Writing();
-			 
+
 			if (Dgv_index_New.SelectedRows.Count == 1) // DGV 로우 선택 확인
 			{
 				int rowIndex = Dgv_index_New.CurrentRow.Index;
 				int[] date = DateChange(((string)Dgv_index_New.Rows[rowIndex].Cells[9].Value));
 
-				writing.Index			= (int)Dgv_index_New.Rows[rowIndex].Cells[0].Value;
-				writing.Imge			= (bool)Dgv_index_New.Rows[rowIndex].Cells[1].Value;
-				writing.Popup			= (bool)Dgv_index_New.Rows[rowIndex].Cells[2].Value;
-				writing.Emogi			= Dgv_index_New.Rows[rowIndex].Cells[3].Value.ToString();
-				writing.Title			= Dgv_index_New.Rows[rowIndex].Cells[4].Value.ToString();
-				writing.Contents		= Dgv_index_New.Rows[rowIndex].Cells[5].Value.ToString();
-				writing.Url				= Dgv_index_New.Rows[rowIndex].Cells[6].Value.ToString();
-				writing.Imgsrc			= Dgv_index_New.Rows[rowIndex].Cells[7].Value.ToString();
-				writing.Category		= Dgv_index_New.Rows[rowIndex].Cells[8].Value.ToString();
-				writing.Year			= date[0];
-				writing.Month			= date[1];
-				writing.Day				= date[2];
-				writing.Popuptitile		= Dgv_index_New.Rows[rowIndex].Cells[10].Value.ToString();
-				writing.PopupImgSrc		= Dgv_index_New.Rows[rowIndex].Cells[11].Value.ToString();
-				writing.PopupContent	= Dgv_index_New.Rows[rowIndex].Cells[12].Value.ToString();
+				writing.Index = (int)Dgv_index_New.Rows[rowIndex].Cells[0].Value;
+				writing.Imge = (bool)Dgv_index_New.Rows[rowIndex].Cells[1].Value;
+				writing.Popup = (bool)Dgv_index_New.Rows[rowIndex].Cells[2].Value;
+				writing.Emogi = Dgv_index_New.Rows[rowIndex].Cells[3].Value.ToString();
+				writing.Title = Dgv_index_New.Rows[rowIndex].Cells[4].Value.ToString();
+				writing.Contents = Dgv_index_New.Rows[rowIndex].Cells[5].Value.ToString();
+				writing.Imgsrc = Dgv_index_New.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Url = Dgv_index_New.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Category = Dgv_index_New.Rows[rowIndex].Cells[8].Value.ToString();
+				writing.Year = date[0];
+				writing.Month = date[1];
+				writing.Day = date[2];
+				writing.Popuptitile = Dgv_index_New.Rows[rowIndex].Cells[10].Value.ToString();
+				writing.PopupImgSrc = Dgv_index_New.Rows[rowIndex].Cells[11].Value.ToString();
+				writing.PopupContent = Dgv_index_New.Rows[rowIndex].Cells[12].Value.ToString();
 
 			}
 			else if (Dgv_index_Info.SelectedRows.Count == 1) // DGV 로우 선택 확인
@@ -94,8 +97,8 @@ namespace MakeNews
 				writing.Emogi = Dgv_index_Info.Rows[rowIndex].Cells[3].Value.ToString();
 				writing.Title = Dgv_index_Info.Rows[rowIndex].Cells[4].Value.ToString();
 				writing.Contents = Dgv_index_Info.Rows[rowIndex].Cells[5].Value.ToString();
-				writing.Url = Dgv_index_Info.Rows[rowIndex].Cells[6].Value.ToString();
-				writing.Imgsrc = Dgv_index_Info.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Imgsrc = Dgv_index_Info.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Url = Dgv_index_Info.Rows[rowIndex].Cells[7].Value.ToString();
 				writing.Category = Dgv_index_Info.Rows[rowIndex].Cells[8].Value.ToString();
 				writing.Year = date[0];
 				writing.Month = date[1];
@@ -115,8 +118,8 @@ namespace MakeNews
 				writing.Emogi = Dgv_History.Rows[rowIndex].Cells[3].Value.ToString();
 				writing.Title = Dgv_History.Rows[rowIndex].Cells[4].Value.ToString();
 				writing.Contents = Dgv_History.Rows[rowIndex].Cells[5].Value.ToString();
-				writing.Url = Dgv_History.Rows[rowIndex].Cells[6].Value.ToString();
-				writing.Imgsrc = Dgv_History.Rows[rowIndex].Cells[7].Value.ToString();
+				writing.Imgsrc = Dgv_History.Rows[rowIndex].Cells[6].Value.ToString();
+				writing.Url = Dgv_History.Rows[rowIndex].Cells[7].Value.ToString();
 				writing.Category = Dgv_History.Rows[rowIndex].Cells[8].Value.ToString();
 				writing.Year = date[0];
 				writing.Month = date[1];
@@ -124,6 +127,11 @@ namespace MakeNews
 				writing.Popuptitile = Dgv_History.Rows[rowIndex].Cells[10].Value.ToString();
 				writing.PopupImgSrc = Dgv_History.Rows[rowIndex].Cells[11].Value.ToString();
 				writing.PopupContent = Dgv_History.Rows[rowIndex].Cells[12].Value.ToString();
+			}
+			else 
+			{
+				MessageBox.Show("Not Select Row. Check Table");
+				return;
 			}
 
 			AddItemPage form = new AddItemPage(dm,"Change Item",writing);
@@ -136,8 +144,31 @@ namespace MakeNews
 			if (Dgv_History.SelectedRows.Count == 1) // 로우 선택 확인
 			{
 				int rowIndex = Dgv_History.CurrentRow.Index;
-				dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value);
-				DgvReLoad();
+				if ((bool)Dgv_History.Rows[rowIndex].Cells[2].Value) //팝업일경우
+				{
+					if (dm.SelectCountSession(2) < 2)
+					{
+						dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
+						DgvReLoad();
+					}
+					else 
+					{
+						MessageBox.Show("Info Full Count. Please Check Info Table");
+					}
+
+				}
+				else 
+				{
+					if (dm.SelectCountSession(1) < 5)
+					{
+						dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
+						DgvReLoad();
+					}
+					else
+					{
+						MessageBox.Show("News Full Count. Please Check News Table");
+					}
+				}
 			}
 			else
 			{
@@ -148,12 +179,14 @@ namespace MakeNews
 		{
 			if (Dgv_index_New.SelectedRows.Count == 1) // 로우 선택 확인
 			{
-				dm.UpdateSession();
+				int rowIndex = Dgv_index_New.CurrentRow.Index;
+				dm.UpdateSession((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value,1,false);
 				DgvReLoad();
 			}
 			else if (Dgv_index_Info.SelectedRows.Count == 1)
 			{
-				dm.UpdateSession();
+				int rowIndex = Dgv_index_Info.CurrentRow.Index;
+				dm.UpdateSession((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value, 2, false);
 				DgvReLoad();
 			}
 			else
@@ -163,13 +196,13 @@ namespace MakeNews
 		}
 		#endregion
 
-		// TODO : Bt_CreatHtml_Click: Create HTML 로직 수정 필요,경로수정 로직 필요
 		// TODO : Bt_OpenHtml_Click: 경로수정 로직 필요
 		// TODO : btn_CopyHtml_Click: 경로수정 로직 필요
 		#region HTML Button Event
 		private void Bt_CreatHtml_Click(object sender, EventArgs e)
 		{
-			dm.CreateHtml(Common.indexPath, Common.historyPath, Common.dataPath);
+			dm.CreateHtml(news,info,history);
+			MessageBox.Show("Complete");
 		}
 		private void Bt_OpenHtml_Click(object sender, EventArgs e)
 		{
@@ -198,11 +231,7 @@ namespace MakeNews
 				MessageBox.Show(message);
 			}
 
-		}
-		private void btn_CopyHtml_Click(object sender, EventArgs e)
-		{
-
-		}
+		} 
 		#endregion
 
 		#region Data Grid View Cell Event
@@ -280,6 +309,15 @@ namespace MakeNews
 			dataGridView.Columns.Clear();
 			List<Writing> data = dm.SelectData(num);
 
+			switch (num)
+			{
+				case 1: news = data; break;
+				case 2: info = data; break;
+				case 3: history = data; break;
+				default:
+					break;
+			}
+
 			DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
 			buttonColumn.HeaderText = "Delete";
 			buttonColumn.Name = "Delete";
@@ -308,7 +346,7 @@ namespace MakeNews
 		 
 		private int[] DateChange(string data) 
 		{
-			string[] dateArray = data.Split('-');
+			string[] dateArray = data.Split('/');
 			int[] date = new int[3];
 			date[0] = int.Parse(dateArray[0]);
 			date[1] = int.Parse(dateArray[1]);

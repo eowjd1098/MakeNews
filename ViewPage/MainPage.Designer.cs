@@ -49,6 +49,7 @@ namespace MakeNews
 			this.Btn_Up = new System.Windows.Forms.Button();
 			this.Btn_Down = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.Btn_Setting = new System.Windows.Forms.Button();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
 			this.label3 = new System.Windows.Forms.Label();

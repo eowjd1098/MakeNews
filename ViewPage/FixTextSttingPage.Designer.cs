@@ -84,7 +84,7 @@ namespace MakeNews
 			this.groupBox1.Size = new System.Drawing.Size(874, 133);
 			this.groupBox1.TabIndex = 10;
 			this.groupBox1.TabStop = false;
-			this.groupBox1.Text = "Index.html";
+			this.groupBox1.Text = "Main Contents";
 			// 
 			// label6
 			// 
@@ -139,9 +139,9 @@ namespace MakeNews
 			this.label1.AutoSize = true;
 			this.label1.Location = new System.Drawing.Point(6, 23);
 			this.label1.Name = "label1";
-			this.label1.Size = new System.Drawing.Size(65, 12);
+			this.label1.Size = new System.Drawing.Size(62, 12);
 			this.label1.TabIndex = 1;
-			this.label1.Text = "Head Titile";
+			this.label1.Text = "Head Title";
 			// 
 			// groupBox2
 			// 
@@ -155,16 +155,16 @@ namespace MakeNews
 			this.groupBox2.Size = new System.Drawing.Size(874, 83);
 			this.groupBox2.TabIndex = 11;
 			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "History.html";
+			this.groupBox2.Text = "History Contents";
 			// 
 			// label11
 			// 
 			this.label11.AutoSize = true;
 			this.label11.Location = new System.Drawing.Point(6, 24);
 			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(65, 12);
+			this.label11.Size = new System.Drawing.Size(62, 12);
 			this.label11.TabIndex = 12;
-			this.label11.Text = "Head Titile";
+			this.label11.Text = "Head Title";
 			// 
 			// Tb_Lst_wrapH2
 			// 
@@ -192,11 +192,11 @@ namespace MakeNews
 			// label7
 			// 
 			this.label7.AutoSize = true;
-			this.label7.Location = new System.Drawing.Point(12, 240);
+			this.label7.Location = new System.Drawing.Point(12, 258);
 			this.label7.Name = "label7";
-			this.label7.Size = new System.Drawing.Size(187, 12);
+			this.label7.Size = new System.Drawing.Size(172, 12);
 			this.label7.TabIndex = 12;
-			this.label7.Text = "ESC : Cancel  ENTER : Change";
+			this.label7.Text = "ESC : Cancle  ENTER : Done";
 			// 
 			// FixTextSttingPage
 			// 

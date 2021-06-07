@@ -1,8 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace MakeNews
 {
@@ -23,39 +28,71 @@ namespace MakeNews
 		#endregion
 
 		#region 고정형 텍스트 관리 
-		public FixText GetFixText(string path)
+		public FixText GetFixTextForXML() 
 		{
-			if (!File.Exists(path))
+			FixText text = new FixText();
+			if (!File.Exists(Common.fixdataPath))
 			{
-				using (File.Create(path)) { }
-				return new FixText("", "", "", "", "");
+				using (File.Create(Common.fixdataPath)) { }
+				return new FixText("","","","","");
 			}
-			else
+			XmlDocument doc = new XmlDocument();
+
+			doc.Load(Common.fixdataPath);
+
+			foreach (XmlNode item in doc.ChildNodes)
 			{
-				string[] lines = File.ReadAllLines(path);
-				if (lines.Length == 0)
+				foreach (XmlNode xmlNode in item)
 				{
-					return new FixText("", "", "", "", "");
+					if (xmlNode.Name == "IndexHead")
+					{
+						text.IndexHead = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "IndexCoverP") 
+					{
+						text.IndexCoverP = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "IndexCopy")
+					{
+						text.IndexCopy = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "HistoryHead")
+					{
+						text.HistoryHead = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "HistoryH2")
+					{
+						text.HistoryH2 = xmlNode.InnerText;
+					}
 				}
-				string[] s =lines[0].Split(',');
-
-				return new FixText(s[0], s[1], s[2], s[3], s[4]);
 			}
+			return text;
 		}
-
-		public void SetFixText(string path, FixText fixText)
+		public void SetFixTextForXML(FixText text) 
 		{
-			if (!File.Exists(path))
+			if ( File.Exists(Common.fixdataPath)) 
 			{
-				using (File.Create(path)) { }
+				File.Delete(Common.fixdataPath); 
 			}
-			using (StreamWriter sw = new StreamWriter(path, false))
+			
+			XmlDocument doc = new XmlDocument();
+			XmlElement fixtext = doc.CreateElement("Config");
+
+			List<PropertyInfo> p_List = new List<PropertyInfo>();
+			p_List.AddRange(text.GetType().GetProperties());
+
+			for (int i = 0; i < p_List.Count; i++) 
 			{
-				sw.WriteLine(fixText.ToString());
+				XmlElement tmp_eml = doc.CreateElement(p_List[i].Name);
+				string[] columnNames = text.GetArray();
+				tmp_eml.InnerText = columnNames[i].ToString();
+				fixtext.AppendChild(tmp_eml);
 			}
+			doc.AppendChild(fixtext);
+
+			doc.Save(Common.fixdataPath);
 
 		}
-
 		#endregion
 		
 		#region Data Base
@@ -109,22 +146,20 @@ namespace MakeNews
 			if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
 			{
 				result = (int)SelectCountSession(session);
-				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				if (result < 0) //read 가 5이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
 				{
 					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Insert");
 					return;
 				} 
-				else if (result >= 6) 
+				else if (result >= 5) 
 				{
 					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 					{
 						conn.Open();
-						sql = "SELECT * FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
+						sql = "SELECT Num FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
 						command = new SQLiteCommand(sql, conn);
-						SQLiteDataReader rdr = command.ExecuteReader();
-						int key = (int)rdr["num"];
-						rdr.Close();
-		
+						int key = (int)((long)command.ExecuteScalar());
+
 						//Updata
 						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
 						command = new SQLiteCommand(sql, conn);
@@ -143,7 +178,7 @@ namespace MakeNews
 			else //팝업이있음 = 정보 일경우
 			{
 				result = (int)SelectCountSession(++session);
-				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				if (result < 0) //read 가 5이 상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
 				{
 					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Insert");
 					return;
@@ -153,11 +188,10 @@ namespace MakeNews
 					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 					{
 						conn.Open();
-						sql = "SELECT * FROM Data WHERE Session = 2 ORDER BY Num ASC LIMIT 1";
+						sql = "SELECT Num FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
 						command = new SQLiteCommand(sql, conn);
-						SQLiteDataReader rdr = command.ExecuteReader();
-						int key = (int)rdr["num"];
-						rdr.Close();
+						int key = (int)((long)command.ExecuteScalar());
+					 
 		
 						//Updata
 						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
@@ -242,8 +276,8 @@ namespace MakeNews
 			{
 				if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
 				{
-					// Session 이 2-> 1 으로 변경 되는 경우 = 체크후 6개이상이면 3으로 변경 
-					if (SelectCountSession(1) < 6)
+					// Session 이 2-> 1 으로 변경 되는 경우 = 체크후 5개이상이면 3으로 변경 
+					if (SelectCountSession(1) < 5)
 					{
 						ChangeSession = 1;
 					}
@@ -290,34 +324,45 @@ namespace MakeNews
 			}
 			
 		}
-		public void UpdateSession(int beforsession,int num) 
+		public void UpdateSession(int num ,int beforsession,bool popupUse) 
 		{
+			string sql = string.Empty;
 			switch (beforsession)
 			{
-				case 1:break;
-				case 1: break;
-				case 1: break;
+				case 1: sql = "UPDATE Data SET Session = 3 where num=" + num; break;
+				case 2: sql = "UPDATE Data SET Session = 3 where num=" + num; break;
+				case 3://변경할 Session Type 확인
+					{
+						if (popupUse)
+						{
+							sql = "UPDATE Data SET Session = 2 where num=" + num;
+						}
+						else
+						{
+							sql = "UPDATE Data SET Session = 1 where num=" + num;
+						}
+					
+					}
+					break;
+
 				default:
 					break;
 			}
-
-			//변경할 Session Type 확인
+			
+			//쿼리 실행
 			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 			{
 				conn.Open();
-				string sql = "UPDATE Data SET Session = 1or2 where num="+num;
 				SQLiteCommand command = new SQLiteCommand(sql, conn);
 				int result = command.ExecuteNonQuery();
 				conn.Close();
 
 				if (result < 0)
 				{
-					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Delete");
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Update");
 				}
 			}
 		}
-
-
 		public int SelectSession(int index) 
 		{
 			int beforSession =3;
@@ -341,10 +386,9 @@ namespace MakeNews
 				string sql = string.Empty;
 				switch (num)
 				{
-					case 1: sql = "SELECT * FROM Data WHERE Session=1 ORDER By Num DESC LIMIT 6";break;
+					case 1: sql = "SELECT * FROM Data WHERE Session=1 ORDER By Num DESC LIMIT 5";break;
 					case 2: sql = "SELECT * FROM Data WHERE Session=2 ORDER By Num DESC LIMIT 2"; break;
 					case 3: sql = "SELECT * FROM Data WHERE Session=3 ORDER By Num DESC"; break;
-					//case 3: sql = "SELECT * FROM Data WHERE Num Not IN (SELECT Num FROM Data WHERE Session=1 ORDER BY Num DESC LIMIT 6) AND Num Not IN (SELECT Num FROM Data WHERE Session=2 ORDER BY Num DESC LIMIT 2)"; break;
 					default:
 						break;
 				}
@@ -397,7 +441,7 @@ namespace MakeNews
 		}
 		public string[] ChangeDate(string date) 
 		{
-			string [] da = date.Split('-');
+			string [] da = date.Split('/');
 			return da;
 		}
 		#endregion
@@ -429,11 +473,12 @@ namespace MakeNews
 		#endregion
 
 		#region Html 관리
-		public void CreateHtml(string indexPath, string historyPath, string dataPath)
+		public void CreateHtml(List<Writing> news, List<Writing> info, List<Writing> history )
 		{
-			FixText fixText = GetFixText(Common.fixdataPath);
+			FixText fixText = GetFixTextForXML();
+			
 			//파일 생성 
-			using (StreamWriter sw = new StreamWriter(indexPath, false))
+			using (StreamWriter sw = new StreamWriter(Common.indexPath, false))
 			{
 				//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
 				sw.WriteLine("{0}", _com.GetIndexHeadHtml(fixText.IndexHead));
