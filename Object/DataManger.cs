@@ -13,7 +13,7 @@ namespace MakeNews
 {
 	public class DataManger
 	{
-		Common com =new Common();
+		Common _com =new Common();
 
 		#region Single Tone Pattern
 		private static DataManger instance;
@@ -94,7 +94,7 @@ namespace MakeNews
 
 		}
 		#endregion
-
+		
 		#region Data Base
 		//DB File Create + Table Create
 		public void InitDataBase() 
@@ -422,12 +422,10 @@ namespace MakeNews
 			return (int)read;
 		}
 
-
 		public void ResetDataBase()
 		{
 
 		}
-
 
 		#region ect funtion
 		public bool ChangeBoolean(long dbdata) 
@@ -483,8 +481,8 @@ namespace MakeNews
 			using (StreamWriter sw = new StreamWriter(Common.indexPath, false))
 			{
 				//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
-				sw.WriteLine("{0}", com.GetIndexHeadHtml(fixText.IndexHead));
-				sw.WriteLine("{0}", com.GetIndexBodyUpperHtml(fixText.IndexCoverP));
+				sw.WriteLine("{0}", _com.GetIndexHeadHtml(fixText.IndexHead));
+				sw.WriteLine("{0}", _com.GetIndexBodyUpperHtml(fixText.IndexCoverP));
 
 				//news
 				int count=0;
@@ -492,31 +490,31 @@ namespace MakeNews
 				{
 					if (item.Imge)
 					{
-						sw.WriteLine("{0}", com.GetIndexBodyNewsImgHtml(item.Url,item.Imgsrc,item.Title,item.GetDate(),item.Category));
+						sw.WriteLine("{0}", _com.GetIndexBodyNewsImgHtml(item.Url,item.Imgsrc,item.Title,item.GetDate(),item.Category));
 					}
 					else
 					{
-						sw.WriteLine("{0}", com.GetIndexBodyNewsNotImgHtml(item.Url, item.Emogi, item.Title,item.Contents, item.GetDate(), item.Category));
+						sw.WriteLine("{0}", _com.GetIndexBodyNewsNotImgHtml(item.Url, item.Emogi, item.Title,item.Contents, item.GetDate(), item.Category));
 					}
 					count++;
 				}
 				for (; count < 5; count++) 
 				{
-					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+					sw.WriteLine("{0}", _com.GetIndexBodyEmptyHtml());
 				}
 
 				//info 
 				count=0;
 				foreach (Writing item in info)
 				{
-					sw.WriteLine("{0}", com.GetIndexBodyPopupHtml((count+1).ToString(),item.Emogi,item.Title,item.Contents,item.GetDate(),item.Category));
+					sw.WriteLine("{0}", _com.GetIndexBodyPopupHtml((count+1).ToString(),item.Emogi,item.Title,item.Contents,item.GetDate(),item.Category));
 					count++;
 				}
 				for (; count < 2; count++)
 				{
-					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+					sw.WriteLine("{0}", _com.GetIndexBodyEmptyHtml());
 				}
-				sw.WriteLine("{0}", com.GetIndexBodyDownHtml(fixText.IndexCopy));
+				sw.WriteLine("{0}", _com.GetIndexBodyDownHtml(fixText.IndexCopy));
 				
 				//info_contents
 				count = 0;
@@ -524,32 +522,32 @@ namespace MakeNews
 				{
 					if (item.PopupImgSrc.Length>0)
 					{
-						sw.WriteLine("{0}", com.GetIndexPopUpContentsImgeUseHtml((count + 1).ToString(),  item.Popuptitile,item.PopupImgSrc,item.PopupContent));
+						sw.WriteLine("{0}", _com.GetIndexPopUpContentsImgeUseHtml((count + 1).ToString(),  item.Popuptitile,item.PopupImgSrc,item.PopupContent));
 					}
 					else
 					{
-						sw.WriteLine("{0}", com.GetIndexPopUpContentsHtml((count + 1).ToString(), item.Popuptitile, item.PopupContent));
+						sw.WriteLine("{0}", _com.GetIndexPopUpContentsHtml((count + 1).ToString(), item.Popuptitile, item.PopupContent));
 					} 
 					count++;
 				}
 				for (; count < 2; count++)
 				{
-					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+					sw.WriteLine("{0}", _com.GetIndexBodyEmptyHtml());
 				}
-				sw.WriteLine("{0}", com.GetIndexScriptHtml());
+				sw.WriteLine("{0}", _com.GetIndexScriptHtml());
 			}
 
 
 			using (StreamWriter sw = new StreamWriter(Common.historyPath, false))
 			{
-				sw.WriteLine("{0}", com.GetIHistoryHeadHtml(fixText.HistoryHead,fixText.HistoryH2));
+				sw.WriteLine("{0}", _com.GetIHistoryHeadHtml(fixText.HistoryHead,fixText.HistoryH2));
 
 				foreach (Writing item in history)
 				{
-					sw.WriteLine("{0}", com.GetHistoryNewsHtml(item.Url, item.Category,item.Title));
+					sw.WriteLine("{0}", _com.GetHistoryNewsHtml(item.Url, item.Category,item.Title));
 				}
 
-				sw.WriteLine("{0}", com.GetHistoryScriptHtml());
+				sw.WriteLine("{0}", _com.GetHistoryScriptHtml());
 			}
 
 		}

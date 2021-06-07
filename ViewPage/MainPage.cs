@@ -4,6 +4,7 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Windows.Forms;
+ 
 
 namespace MakeNews
 {
@@ -38,9 +39,10 @@ namespace MakeNews
 		#region Setting Button Event
 		private void Btn_Setting_Click(object sender, EventArgs e)
 		{
-			// 세팅 창 추가 
-			//세팅창 추가할것 -> Add,Change 시 From Close 할지 안할지?
-			//복사할 HTML 위치
+			SettingPage form = new SettingPage(dm);
+			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
+
+			form.ShowDialog();
 
 		}
 		private void Bt_Setting_Click(object sender, EventArgs e)

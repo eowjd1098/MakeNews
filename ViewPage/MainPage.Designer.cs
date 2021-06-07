@@ -52,6 +52,7 @@ namespace MakeNews
 			this.Btn_Setting = new System.Windows.Forms.Button();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.label3 = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_Info)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_New)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_History)).BeginInit();
@@ -145,7 +146,7 @@ namespace MakeNews
 			this.Bt_OpenHtml.Name = "Bt_OpenHtml";
 			this.Bt_OpenHtml.Size = new System.Drawing.Size(197, 57);
 			this.Bt_OpenHtml.TabIndex = 37;
-			this.Bt_OpenHtml.Text = "Open after Copy HTML";
+			this.Bt_OpenHtml.Text = "Open after Copy HTML\r\n기능미완\r\n";
 			this.Bt_OpenHtml.UseVisualStyleBackColor = true;
 			this.Bt_OpenHtml.Click += new System.EventHandler(this.Bt_OpenHtml_Click);
 			// 
@@ -306,7 +307,7 @@ namespace MakeNews
 			this.Btn_Setting.Name = "Btn_Setting";
 			this.Btn_Setting.Size = new System.Drawing.Size(197, 57);
 			this.Btn_Setting.TabIndex = 32;
-			this.Btn_Setting.Text = "Application Setting";
+			this.Btn_Setting.Text = "Application Setting\r\n기능 미완";
 			this.Btn_Setting.UseVisualStyleBackColor = true;
 			this.Btn_Setting.Click += new System.EventHandler(this.Btn_Setting_Click);
 			// 
@@ -322,6 +323,7 @@ namespace MakeNews
 			// 
 			// panel4
 			// 
+			this.panel4.Controls.Add(this.label3);
 			this.panel4.Controls.Add(this.Bt_CreatHtml);
 			this.panel4.Controls.Add(this.Bt_OpenHtml);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -329,6 +331,15 @@ namespace MakeNews
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(200, 349);
 			this.panel4.TabIndex = 40;
+			// 
+			// label3
+			// 
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(108, 335);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(90, 12);
+			this.label3.TabIndex = 39;
+			this.label3.Text = "ver 1.0.0 (beta)";
 			// 
 			// MainPage
 			// 
@@ -356,6 +367,7 @@ namespace MakeNews
 			this.panel2.ResumeLayout(false);
 			this.panel3.ResumeLayout(false);
 			this.panel4.ResumeLayout(false);
+			this.panel4.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -382,5 +394,6 @@ namespace MakeNews
 		private System.Windows.Forms.Button Btn_Up;
 		private System.Windows.Forms.Button Btn_Down;
 		private System.Windows.Forms.Button Btn_Setting;
+		private System.Windows.Forms.Label label3;
 	}
 }

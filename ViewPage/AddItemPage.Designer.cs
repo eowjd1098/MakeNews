@@ -56,12 +56,12 @@ namespace MakeNews
 			this.label9 = new System.Windows.Forms.Label();
 			this.Bt_CopyContent = new System.Windows.Forms.Button();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
+			this.label10 = new System.Windows.Forms.Label();
 			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.label11 = new System.Windows.Forms.Label();
 			this.Bt_Cancel = new System.Windows.Forms.Button();
 			this.Bt_Change = new System.Windows.Forms.Button();
 			this.label6 = new System.Windows.Forms.Label();
-			this.label10 = new System.Windows.Forms.Label();
-			this.label11 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
 			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
@@ -325,6 +325,15 @@ namespace MakeNews
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Main Contents";
 			// 
+			// label10
+			// 
+			this.label10.AutoSize = true;
+			this.label10.Location = new System.Drawing.Point(91, 190);
+			this.label10.Name = "label10";
+			this.label10.Size = new System.Drawing.Size(405, 12);
+			this.label10.TabIndex = 15;
+			this.label10.Text = "(Enter는 <br> tag 로 대체 해야합니다. ex) 안녕하세요. <br> 반갑습니다.";
+			// 
 			// groupBox2
 			// 
 			this.groupBox2.Controls.Add(this.label11);
@@ -341,6 +350,15 @@ namespace MakeNews
 			this.groupBox2.TabIndex = 31;
 			this.groupBox2.TabStop = false;
 			this.groupBox2.Text = "Popup Contents";
+			// 
+			// label11
+			// 
+			this.label11.AutoSize = true;
+			this.label11.Location = new System.Drawing.Point(91, 190);
+			this.label11.Name = "label11";
+			this.label11.Size = new System.Drawing.Size(405, 12);
+			this.label11.TabIndex = 16;
+			this.label11.Text = "(Enter는 <br> tag 로 대체 해야합니다. ex) 안녕하세요. <br> 반갑습니다.";
 			// 
 			// Bt_Cancel
 			// 
@@ -371,24 +389,6 @@ namespace MakeNews
 			this.label6.Size = new System.Drawing.Size(172, 12);
 			this.label6.TabIndex = 34;
 			this.label6.Text = "ESC : Cancle  ENTER : Done";
-			// 
-			// label10
-			// 
-			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(91, 190);
-			this.label10.Name = "label10";
-			this.label10.Size = new System.Drawing.Size(405, 12);
-			this.label10.TabIndex = 15;
-			this.label10.Text = "(Enter는 <br> tag 로 대체 해야합니다. ex) 안녕하세요. <br> 반갑습니다.";
-			// 
-			// label11
-			// 
-			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(91, 190);
-			this.label11.Name = "label11";
-			this.label11.Size = new System.Drawing.Size(405, 12);
-			this.label11.TabIndex = 16;
-			this.label11.Text = "(Enter는 <br> tag 로 대체 해야합니다. ex) 안녕하세요. <br> 반갑습니다.";
 			// 
 			// AddItemPage
 			// 

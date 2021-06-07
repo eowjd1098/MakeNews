@@ -6,13 +6,13 @@ namespace MakeNews
 {
 	public partial class AddItemPage: Form
 	{
-		DataManger dm;
-		Writing changeData;
+		DataManger _dm;
+		Writing _changeData;
 		#region Constructor
-		public AddItemPage(DataManger _dm,string btntext)
+		public AddItemPage(DataManger dm,string btntext)
 		{
 			InitializeComponent();
-			dm = _dm;
+			_dm = dm;
 
 			Text = btntext+" Page";
 			Bt_Change.Text = btntext;
@@ -24,10 +24,10 @@ namespace MakeNews
 			Bt_CopyContent.Enabled = false;
 		}
 
-		public AddItemPage(DataManger _dm, string btntext, Writing writing)
+		public AddItemPage(DataManger dm, string btntext, Writing writing)
 		{
 			InitializeComponent();
-			dm = _dm;
+			_dm = dm;
 
 			Text = btntext + " Page";
 			Bt_Change.Text = btntext;
@@ -37,7 +37,7 @@ namespace MakeNews
 			Tb_PoupContent.Enabled = false;
 			Tb_PoupImgPath.Enabled = false;
 			Bt_CopyContent.Enabled = false;
-			changeData = writing;
+			_changeData = writing;
 
 			Cb_PopupUse.Checked = writing.Popup;
 			Cb_ImageUse.Checked = writing.Imge;
@@ -133,13 +133,13 @@ namespace MakeNews
 
 			if (Bt_Change.Text == "Change Item")
 			{
-				int beforesession = dm.SelectSession(changeData.Index);
+				int beforesession = _dm.SelectSession(_changeData.Index);
 
-				dm.UpdateInfo(new Writing(changeData.Index, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text), beforesession); 
+				_dm.UpdateInfo(new Writing(_changeData.Index, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text), beforesession); 
 			}
 			else if (Bt_Change.Text == "Add Item")
 			{
-				dm.InsertInfo(new Writing(0, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
+				_dm.InsertInfo(new Writing(0, ImgUse, popupUse, Tb_Emogi.Text, Tb_Title.Text, Tb_Content.Text, Tb_Url.Text, Tb_imgsrc.Text, Tb_Catagory.Text, Tb_year.Text, Tb_mount.Text, Tb_Day.Text, Tb_PoupTitle.Text, Tb_PoupImgPath.Text, Tb_PoupContent.Text));
 			}
 			else 
 			{
