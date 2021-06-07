@@ -4,8 +4,10 @@ namespace MakeNews
 {
 	public class Common
 	{
-		//Data 경로
-		public static string fixdataPath = Application.StartupPath + @"\FixData.xml";
+		public static string fixdataPath = Application.StartupPath + @"\FixData.txt";
+		public static string dataPath = Application.StartupPath + @"\Data.csv";
+		public static string indexPath = Application.StartupPath + @"\Index.html";
+		public static string historyPath = Application.StartupPath + @"\History.html";
 		public static string DBPath = Application.StartupPath + @"\Data.db";
 		public static string DBDataPath = "Data Source=" + Application.StartupPath + "\\Data.db;Version=3;";
 
@@ -115,7 +117,7 @@ namespace MakeNews
 			<!-- //기사 / 이미지 있는 경우 -->";
 			return text;
 		}
-		public string GetIndexBodyPopupHtml(string popupnum, string emogi, string titile, string sumry, string date, string catagory)
+		public string GetIndexBodyPopupNoImgHtml(string popupnum, string emogi, string titile, string sumry, string date, string catagory)
 		{
 			string text =
 @"				<!-- 소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->
@@ -134,7 +136,27 @@ namespace MakeNews
 				</li>
 				<!-- //소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->";
 			return text;
-		} 
+		}
+		public string GetIndexBodyPopupImgHtml(string popupnum, string emogi, string titile, string sumry, string date, string catagory)
+		{
+			string text =
+@"				<!-- 소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->
+				<li class=""noti"">
+					<a href=""#ly_pop"+popupnum+@""">
+						<div class=""news_wrap"">
+							<span class=""emoji"">"+emogi+@"</span>
+							<h3 class=""tit"">"+titile+@"</h3>
+							<p class=""smry"">"+sumry+@"</p>
+							<div class=""info"">
+								<time class=""date"">"+date+@"</time>
+								<em class=""category"">"+catagory+@"</em>
+							</div>
+						</div>
+					</a>
+				</li>
+				<!-- //소식 / 클릭시 ly_pop"+popupnum+@" 팝업 -->";
+			return text;
+		}
 		public string GetIndexBodyEmptyHtml()
 		{
 			string text =
@@ -181,35 +203,33 @@ namespace MakeNews
 </div>";
 			return text;
 		}
-		public string GetIndexPopUpContentsImgeUseHtml(string popupnum, string popuptitle, string popupimg, string popupcontent)
+		public string GetIndexPopUpContentsHtml(string Fixtitile)
 		{
 			string text =
-@"<!-- //wrap --> 
-<div class=""ly_pop"" id=""ly_pop"+popupnum+@""">
+@"<!-- //wrap -->
+<!-- ly_pop / 첫번째 소식 팝업 -->
+<div class=""ly_pop"" id=""ly_pop1"">
 	<div class=""cnt_bx"">
-		<strong class=""tit"">"+popuptitle+@"</strong>
-		<div class=""img_area""><img src="""+popupimg+@""" width=""100%"" height="""" alt=""소식 이미지""></div><!-- 이미지 사이즈 1000*400 / 사이즈 안맞을 경우 상단부터 노출 하단 잘림 -->
+		<strong class=""tit"">★급★ 한강에 라면 먹으러 갈 사람!!!</strong>
+		<div class=""img_area""><img src=""img/tmp_pop.png"" width=""100%"" height="""" alt=""소식 이미지""></div><!-- 이미지 사이즈 1000*400 / 사이즈 안맞을 경우 상단부터 노출 하단 잘림 -->
 		<div class=""txt_area"">
-			<p>"+popupcontent+@"</p>
+			<p>한강에서 먹는 라면은 정말 집에서 먹는 것보다 더 맛있나요? 아주 궁금하네요. 저는 한강에서 라면을 먹어본 적이 없어서요.생각해보니 컵라면마저도 먹어본 기억이 없네요. 친구가 없긴 없었나 봅니다. 저도 한강에서 방금 끓인 꼬들꼬들한 라면과 밥보다 야채가 더 많은 김밥을 먹고 싶어요.평일에.주말 말고요. 평일에 말이에요. 오늘 날씨도 끝내주던데.꽃가루가 미친 듯이 날리지만 평일 대낮에 한강에서 라면을 먹을 수 있다면 꽃가루쯤은 파슬리라 생각하고 즐거이 먹겠어요.</p>
 		</div>
 		<button type = ""button"" class=""btn_close"">소식창 닫기</button>
 	</div>
-</div>"; 
-			return text;
-		}
-
-		public string GetIndexPopUpContentsHtml(string popupnum, string popuptitle, string popupcontent)
-		{
-			string text =
-@"<div class=""ly_pop"" id=""ly_pop"+popupnum+@""">
+</div>
+<!-- //ly_pop / 첫번째 소식 팝업 -->
+<!-- ly_pop / 두번째 소식 팝업 -->
+<div class=""ly_pop"" id=""ly_pop2"">
 	<div class=""cnt_bx"">
-		<strong class=""tit"">"+popuptitle+@"</strong>
+		<strong class=""tit"">굿-바-이 🙋🏻‍♂️</strong>
 		<div class=""txt_area"">
-			<p>"+popupcontent+@"</p>
+			<p>안녕하세요, 김지수입니다. 저는 떠납니다, 여러분. 탓하하하. 부럽죠? 솔직히? 혼자 남아서 철야하던 시간들, 밤새고 다음날 또 출근해서 간현가던 기억들, 꼭 나가자마자 잊을게요. 떠나는 인사만큼은 진심으로 전할게요.그럼 모두들 안녕히. 굿바이!</p>
 		</div>
 		<button type = ""button"" class=""btn_close"">소식창 닫기</button>
 	</div>
-</div> ";
+</div>
+<!-- //ly_pop / 두번째 소식 팝업 -->";
 			return text;
 		}
 		public string GetIndexScriptHtml()
@@ -310,7 +330,7 @@ $(document).mouseup(function(e){
 			string text =
 @"				<li>
 					<a href="""+url+@""" target=""_blank"">
-						  <div class=""tit_bx"">
+						  < div class=""tit_bx"">
 							<strong class=""category"">"+catagory+@"</strong>
 							<h3 class=""tit"">"+titile+@"</h3><!-- 디자인상 영역보다 길어질 경우 말줄임표 처리 -->
 						</div>

@@ -11,9 +11,6 @@
 			HistoryHead = historyHead;
 			HistoryH2 = historyH2;
 		}
-		public FixText() 
-		{
-		}
 		#endregion
 
 		#region Properti
@@ -28,12 +25,6 @@
 		public override string ToString()
 		{
 			return IndexHead + "," + IndexCoverP + "," + IndexCopy + "," + HistoryHead + "," + HistoryH2;
-		}
-
-		public string[] GetArray() 
-		{
-			string [] array = {IndexHead,IndexCoverP,IndexCopy,HistoryHead,HistoryH2 };
-			return array;
 		}
 		#endregion
 	}
