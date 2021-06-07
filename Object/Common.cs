@@ -13,8 +13,8 @@ namespace MakeNews
 		public static string indexPath = Application.StartupPath + @"\Index.html";
 		public static string historyPath = Application.StartupPath + @"\History.html";
 		public static string dataPath = Application.StartupPath + @"\Data.csv";
+		public static string copyPath = Application.StartupPath;
 
-		
 		#region HTML CODE
 		//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
 		public string GetIndexHeadHtml(string Fixtitile)

@@ -8,16 +8,16 @@ namespace MakeNews
 {
 	public partial class FixTextSttingPage: Form
 	{
-		DataManger dm;
+		DataManger _dm;
 		
 		#region Constructor
-		public FixTextSttingPage(DataManger _dm)
+		public FixTextSttingPage(DataManger dm)
 		{
 			InitializeComponent();			
-			dm = _dm;
+			_dm = dm;
 
 			//FixText text = dm.GetFixText(Common.fixdataPath);
-			FixText text = dm.GetFixTextForXML();
+			FixText text = this._dm.GetFixTextForXML();
 			Tb_IndexHeadTitile.Text = text.IndexHead;
 			Tb_IndexCoverPTag.Text = text.IndexCoverP;
 			Tb_IndexCopy.Text = text.IndexCopy;
@@ -30,7 +30,7 @@ namespace MakeNews
 		private void Bt_Change_Click(object sender, EventArgs e)
 		{
 			FixText text = new FixText(Tb_IndexHeadTitile.Text,Tb_IndexCoverPTag.Text,Tb_IndexCopy.Text,Tb_HistoryTitle.Text,Tb_Lst_wrapH2.Text);
-			dm.SetFixTextForXML(text);
+			_dm.SetFixTextForXML(text);
 			
 			if (true)//setting
 			{
