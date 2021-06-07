@@ -49,10 +49,9 @@ namespace MakeNews
 			this.Btn_Up = new System.Windows.Forms.Button();
 			this.Btn_Down = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
+			this.Btn_Setting = new System.Windows.Forms.Button();
 			this.panel3 = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
-			this.Btn_Setting = new System.Windows.Forms.Button();
-			this.btn_CopyHtml = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_Info)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_index_New)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.Dgv_History)).BeginInit();
@@ -146,7 +145,7 @@ namespace MakeNews
 			this.Bt_OpenHtml.Name = "Bt_OpenHtml";
 			this.Bt_OpenHtml.Size = new System.Drawing.Size(197, 57);
 			this.Bt_OpenHtml.TabIndex = 37;
-			this.Bt_OpenHtml.Text = "Open HTML";
+			this.Bt_OpenHtml.Text = "Open after Copy HTML";
 			this.Bt_OpenHtml.UseVisualStyleBackColor = true;
 			this.Bt_OpenHtml.Click += new System.EventHandler(this.Bt_OpenHtml_Click);
 			// 
@@ -300,6 +299,17 @@ namespace MakeNews
 			this.panel2.Size = new System.Drawing.Size(200, 191);
 			this.panel2.TabIndex = 38;
 			// 
+			// Btn_Setting
+			// 
+			this.Btn_Setting.Location = new System.Drawing.Point(0, 3);
+			this.Btn_Setting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
+			this.Btn_Setting.Name = "Btn_Setting";
+			this.Btn_Setting.Size = new System.Drawing.Size(197, 57);
+			this.Btn_Setting.TabIndex = 32;
+			this.Btn_Setting.Text = "Application Setting";
+			this.Btn_Setting.UseVisualStyleBackColor = true;
+			this.Btn_Setting.Click += new System.EventHandler(this.Btn_Setting_Click);
+			// 
 			// panel3
 			// 
 			this.panel3.Controls.Add(this.Bt_AddData);
@@ -312,7 +322,6 @@ namespace MakeNews
 			// 
 			// panel4
 			// 
-			this.panel4.Controls.Add(this.btn_CopyHtml);
 			this.panel4.Controls.Add(this.Bt_CreatHtml);
 			this.panel4.Controls.Add(this.Bt_OpenHtml);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -320,28 +329,6 @@ namespace MakeNews
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(200, 349);
 			this.panel4.TabIndex = 40;
-			// 
-			// Btn_Setting
-			// 
-			this.Btn_Setting.Location = new System.Drawing.Point(0, 3);
-			this.Btn_Setting.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.Btn_Setting.Name = "Btn_Setting";
-			this.Btn_Setting.Size = new System.Drawing.Size(197, 57);
-			this.Btn_Setting.TabIndex = 32;
-			this.Btn_Setting.Text = "Application Setting";
-			this.Btn_Setting.UseVisualStyleBackColor = true;
-			this.Btn_Setting.Click += new System.EventHandler(this.Btn_Setting_Click);
-			// 
-			// btn_CopyHtml
-			// 
-			this.btn_CopyHtml.Location = new System.Drawing.Point(2, 124);
-			this.btn_CopyHtml.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
-			this.btn_CopyHtml.Name = "btn_CopyHtml";
-			this.btn_CopyHtml.Size = new System.Drawing.Size(197, 57);
-			this.btn_CopyHtml.TabIndex = 39;
-			this.btn_CopyHtml.Text = "Copy HTML";
-			this.btn_CopyHtml.UseVisualStyleBackColor = true;
-			this.btn_CopyHtml.Click += new System.EventHandler(this.btn_CopyHtml_Click);
 			// 
 			// MainPage
 			// 
@@ -395,6 +382,5 @@ namespace MakeNews
 		private System.Windows.Forms.Button Btn_Up;
 		private System.Windows.Forms.Button Btn_Down;
 		private System.Windows.Forms.Button Btn_Setting;
-		private System.Windows.Forms.Button btn_CopyHtml;
 	}
 }

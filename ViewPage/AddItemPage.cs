@@ -145,7 +145,10 @@ namespace MakeNews
 			{
 				MessageBox.Show("Error Form");
 			}
-
+			if (true) 
+			{
+				this.Close();
+			}
 			MessageBox.Show("Complete");
 		}
 		private void Bt_Cancel_Click(object sender, EventArgs e)

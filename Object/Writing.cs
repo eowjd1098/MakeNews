@@ -53,7 +53,7 @@
 		}
 		public string GetDate() 
 		{
-			return Year + "-" + Month + "-" + Day;
+			return Year + "/" + Month + "/" + Day;
 		}
 		#endregion
 	}

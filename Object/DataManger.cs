@@ -1,16 +1,19 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Data.SQLite;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Windows.Forms;
+using System.Xml;
 
 namespace MakeNews
 {
 	public class DataManger
 	{
 		Common com =new Common();
-		//Stack<Writing> writingStack;
-		//List<Writing> writinglist = new List<Writing>();
 
 		#region Single Tone Pattern
 		private static DataManger instance;
@@ -25,39 +28,71 @@ namespace MakeNews
 		#endregion
 
 		#region 고정형 텍스트 관리 
-		public FixText GetFixText(string path)
+		public FixText GetFixTextForXML() 
 		{
-			if (!File.Exists(path))
+			FixText text = new FixText();
+			if (!File.Exists(Common.fixdataPath))
 			{
-				using (File.Create(path)) { }
-				return new FixText("", "", "", "", "");
+				using (File.Create(Common.fixdataPath)) { }
+				return new FixText("","","","","");
 			}
-			else
+			XmlDocument doc = new XmlDocument();
+
+			doc.Load(Common.fixdataPath);
+
+			foreach (XmlNode item in doc.ChildNodes)
 			{
-				string[] lines = File.ReadAllLines(path);
-				if (lines.Length == 0)
+				foreach (XmlNode xmlNode in item)
 				{
-					return new FixText("", "", "", "", "");
+					if (xmlNode.Name == "IndexHead")
+					{
+						text.IndexHead = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "IndexCoverP") 
+					{
+						text.IndexCoverP = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "IndexCopy")
+					{
+						text.IndexCopy = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "HistoryHead")
+					{
+						text.HistoryHead = xmlNode.InnerText;
+					}
+					else if (xmlNode.Name == "HistoryH2")
+					{
+						text.HistoryH2 = xmlNode.InnerText;
+					}
 				}
-				string[] s =lines[0].Split(',');
-
-				return new FixText(s[0], s[1], s[2], s[3], s[4]);
 			}
+			return text;
 		}
-
-		public void SetFixText(string path, FixText fixText)
+		public void SetFixTextForXML(FixText text) 
 		{
-			if (!File.Exists(path))
+			if ( File.Exists(Common.fixdataPath)) 
 			{
-				using (File.Create(path)) { }
+				File.Delete(Common.fixdataPath); 
 			}
-			using (StreamWriter sw = new StreamWriter(path, false))
+			
+			XmlDocument doc = new XmlDocument();
+			XmlElement fixtext = doc.CreateElement("Config");
+
+			List<PropertyInfo> p_List = new List<PropertyInfo>();
+			p_List.AddRange(text.GetType().GetProperties());
+
+			for (int i = 0; i < p_List.Count; i++) 
 			{
-				sw.WriteLine(fixText.ToString());
+				XmlElement tmp_eml = doc.CreateElement(p_List[i].Name);
+				string[] columnNames = text.GetArray();
+				tmp_eml.InnerText = columnNames[i].ToString();
+				fixtext.AppendChild(tmp_eml);
 			}
+			doc.AppendChild(fixtext);
+
+			doc.Save(Common.fixdataPath);
 
 		}
-
 		#endregion
 
 		#region Data Base
@@ -111,22 +146,20 @@ namespace MakeNews
 			if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
 			{
 				result = (int)SelectCountSession(session);
-				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				if (result < 0) //read 가 5이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
 				{
 					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - News Insert");
 					return;
 				} 
-				else if (result >= 6) 
+				else if (result >= 5) 
 				{
 					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 					{
 						conn.Open();
-						sql = "SELECT * FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
+						sql = "SELECT Num FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
 						command = new SQLiteCommand(sql, conn);
-						SQLiteDataReader rdr = command.ExecuteReader();
-						int key = (int)rdr["num"];
-						rdr.Close();
-		
+						int key = (int)((long)command.ExecuteScalar());
+
 						//Updata
 						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
 						command = new SQLiteCommand(sql, conn);
@@ -145,7 +178,7 @@ namespace MakeNews
 			else //팝업이있음 = 정보 일경우
 			{
 				result = (int)SelectCountSession(++session);
-				if (result < 0) //read 가 6이상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
+				if (result < 0) //read 가 5이 상일경우 마지막데이터 업데이트 진행 아닐경우 인서트 진행 
 				{
 					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Info Insert");
 					return;
@@ -155,11 +188,10 @@ namespace MakeNews
 					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 					{
 						conn.Open();
-						sql = "SELECT * FROM Data WHERE Session = 2 ORDER BY Num ASC LIMIT 1";
+						sql = "SELECT Num FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
 						command = new SQLiteCommand(sql, conn);
-						SQLiteDataReader rdr = command.ExecuteReader();
-						int key = (int)rdr["num"];
-						rdr.Close();
+						int key = (int)((long)command.ExecuteScalar());
+					 
 		
 						//Updata
 						sql = "UPDATE Data Set Session = 3 WHERE num = " + key;
@@ -244,8 +276,8 @@ namespace MakeNews
 			{
 				if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
 				{
-					// Session 이 2-> 1 으로 변경 되는 경우 = 체크후 6개이상이면 3으로 변경 
-					if (SelectCountSession(1) < 6)
+					// Session 이 2-> 1 으로 변경 되는 경우 = 체크후 5개이상이면 3으로 변경 
+					if (SelectCountSession(1) < 5)
 					{
 						ChangeSession = 1;
 					}
@@ -292,34 +324,45 @@ namespace MakeNews
 			}
 			
 		}
-		public void UpdateSession(int beforsession,int num) 
+		public void UpdateSession(int num ,int beforsession,bool popupUse) 
 		{
+			string sql = string.Empty;
 			switch (beforsession)
 			{
-				case 1:break;
-				case 1: break;
-				case 1: break;
+				case 1: sql = "UPDATE Data SET Session = 3 where num=" + num; break;
+				case 2: sql = "UPDATE Data SET Session = 3 where num=" + num; break;
+				case 3://변경할 Session Type 확인
+					{
+						if (popupUse)
+						{
+							sql = "UPDATE Data SET Session = 2 where num=" + num;
+						}
+						else
+						{
+							sql = "UPDATE Data SET Session = 1 where num=" + num;
+						}
+					
+					}
+					break;
+
 				default:
 					break;
 			}
-
-			//변경할 Session Type 확인
+			
+			//쿼리 실행
 			using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 			{
 				conn.Open();
-				string sql = "UPDATE Data SET Session = 1or2 where num="+num;
 				SQLiteCommand command = new SQLiteCommand(sql, conn);
 				int result = command.ExecuteNonQuery();
 				conn.Close();
 
 				if (result < 0)
 				{
-					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Delete");
+					System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Update");
 				}
 			}
 		}
-
-
 		public int SelectSession(int index) 
 		{
 			int beforSession =3;
@@ -343,10 +386,9 @@ namespace MakeNews
 				string sql = string.Empty;
 				switch (num)
 				{
-					case 1: sql = "SELECT * FROM Data WHERE Session=1 ORDER By Num DESC LIMIT 6";break;
+					case 1: sql = "SELECT * FROM Data WHERE Session=1 ORDER By Num DESC LIMIT 5";break;
 					case 2: sql = "SELECT * FROM Data WHERE Session=2 ORDER By Num DESC LIMIT 2"; break;
 					case 3: sql = "SELECT * FROM Data WHERE Session=3 ORDER By Num DESC"; break;
-					//case 3: sql = "SELECT * FROM Data WHERE Num Not IN (SELECT Num FROM Data WHERE Session=1 ORDER BY Num DESC LIMIT 6) AND Num Not IN (SELECT Num FROM Data WHERE Session=2 ORDER BY Num DESC LIMIT 2)"; break;
 					default:
 						break;
 				}
@@ -380,10 +422,12 @@ namespace MakeNews
 			return (int)read;
 		}
 
+
 		public void ResetDataBase()
 		{
 
 		}
+
 
 		#region ect funtion
 		public bool ChangeBoolean(long dbdata) 
@@ -399,7 +443,7 @@ namespace MakeNews
 		}
 		public string[] ChangeDate(string date) 
 		{
-			string [] da = date.Split('-');
+			string [] da = date.Split('/');
 			return da;
 		}
 		#endregion
@@ -431,58 +475,81 @@ namespace MakeNews
 		#endregion
 
 		#region Html 관리
-		public void CreateHtml(string indexPath, string historyPath, string dataPath)
+		public void CreateHtml(List<Writing> news, List<Writing> info, List<Writing> history )
 		{
-			FixText fixText = GetFixText(Common.fixdataPath);
+			FixText fixText = GetFixTextForXML();
+			
 			//파일 생성 
-			using (StreamWriter sw = new StreamWriter(indexPath, false))
+			using (StreamWriter sw = new StreamWriter(Common.indexPath, false))
 			{
+				//Index Page 순서 Head -> BodyUpper -> NewsnoImg,NewsImg,Empty(반복) -> PopupnoImg, PopupImg,Empty(반복) ->BodyDown-> PopupContents-> Script
 				sw.WriteLine("{0}", com.GetIndexHeadHtml(fixText.IndexHead));
-				sw.WriteLine("{0}", @"<body>");
-				sw.WriteLine("{0}", @"<div id = ""wrap"" >");
-				sw.WriteLine("{0}", @"<section id = ""container"" >");
-				sw.WriteLine("{0}", @"<div class=""contents"">");
-				sw.WriteLine("{0}", @"<section class=""cover"">");
-				sw.WriteLine("{0}", @"<h1>금요일 뉴스레터</h1>");
-				sw.WriteLine("{0}", @"<p class=""desc"">매주 금요일! 주목해야 할 트렌드, IT,<br>뉴미디어 관련 전시ㆍ공연 정보 등이<br>다양하게 업데이트됩니다!</p>");
-				sw.WriteLine("{0}", @"</section>");
-				sw.WriteLine("{0}", @"<section class=""news"">");
-				sw.WriteLine("{0}", @"<ul >");
-				//
-				//titile 공간
+				sw.WriteLine("{0}", com.GetIndexBodyUpperHtml(fixText.IndexCoverP));
 
-				//
-				sw.WriteLine("{0}", @"</ul >");
-				sw.WriteLine("{0}", @"</section >");
-				sw.WriteLine("{0}", @"</div>");
-				sw.WriteLine("{0}", @"<div class=""donate"">");
-				sw.WriteLine("{0}", @"<div class=""marquee_bx"">");
-				sw.WriteLine("{0}", @"<p class=""plz"">......................</p>");
-				sw.WriteLine("{0}", @"</div>");
-				sw.WriteLine("{0}", @"</div>");
-				sw.WriteLine("{0}", @"</section >");
-				sw.WriteLine("{0}", @"<footer id = ""footer"" >");
-				sw.WriteLine("{0}", @"<strong class=""copy"">..................</strong>");
-				sw.WriteLine("{0}", @"</footer>");
-				sw.WriteLine("{0}", "</div>");
-				//
-				//Popup 공간
+				//news
+				int count=0;
+				foreach (Writing item in news)
+				{
+					if (item.Imge)
+					{
+						sw.WriteLine("{0}", com.GetIndexBodyNewsImgHtml(item.Url,item.Imgsrc,item.Title,item.GetDate(),item.Category));
+					}
+					else
+					{
+						sw.WriteLine("{0}", com.GetIndexBodyNewsNotImgHtml(item.Url, item.Emogi, item.Title,item.Contents, item.GetDate(), item.Category));
+					}
+					count++;
+				}
+				for (; count < 5; count++) 
+				{
+					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+				}
 
-
-				//
-				sw.WriteLine("{0}", @"<script>");
-				sw.WriteLine("{0}", @"$('.news .noti>a').on('click', function(e){var PopBx = $(this).attr('href'); $(PopBx).fadeIn().addClass('on');	});");
-				sw.WriteLine("{0}", @"$(document).mouseup(function(e){var LyPop = $("".ly_pop""); if (LyPop.has(e.target).length === 0)	{LyPop.fadeOut().removeClass('on');	}$('.ly_pop .btn_close').on('click', function(e){LyPop.fadeOut().removeClass('on');});});");
-				sw.WriteLine("{0}", @"</script >");
-				sw.WriteLine("{0}", @"</body >");
-				sw.WriteLine("{0}", @"</html >");
-
+				//info 
+				count=0;
+				foreach (Writing item in info)
+				{
+					sw.WriteLine("{0}", com.GetIndexBodyPopupHtml((count+1).ToString(),item.Emogi,item.Title,item.Contents,item.GetDate(),item.Category));
+					count++;
+				}
+				for (; count < 2; count++)
+				{
+					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+				}
+				sw.WriteLine("{0}", com.GetIndexBodyDownHtml(fixText.IndexCopy));
+				
+				//info_contents
+				count = 0;
+				foreach (Writing item in info)
+				{
+					if (item.PopupImgSrc.Length>0)
+					{
+						sw.WriteLine("{0}", com.GetIndexPopUpContentsImgeUseHtml((count + 1).ToString(),  item.Popuptitile,item.PopupImgSrc,item.PopupContent));
+					}
+					else
+					{
+						sw.WriteLine("{0}", com.GetIndexPopUpContentsHtml((count + 1).ToString(), item.Popuptitile, item.PopupContent));
+					} 
+					count++;
+				}
+				for (; count < 2; count++)
+				{
+					sw.WriteLine("{0}", com.GetIndexBodyEmptyHtml());
+				}
+				sw.WriteLine("{0}", com.GetIndexScriptHtml());
 			}
 
 
-			using (StreamWriter sw = new StreamWriter(historyPath, false))
+			using (StreamWriter sw = new StreamWriter(Common.historyPath, false))
 			{
-				//sw.WriteLine("{0}", @"</html >");
+				sw.WriteLine("{0}", com.GetIHistoryHeadHtml(fixText.HistoryHead,fixText.HistoryH2));
+
+				foreach (Writing item in history)
+				{
+					sw.WriteLine("{0}", com.GetHistoryNewsHtml(item.Url, item.Category,item.Title));
+				}
+
+				sw.WriteLine("{0}", com.GetHistoryScriptHtml());
 			}
 
 		}
