@@ -17,14 +17,14 @@ namespace MakeNews
 		List<Writing> info;
 		List<Writing> history;
 
-		DataManger dm;// DataManger 전역 호출 용  
+		DataManger _dm;// DataManger 전역 호출 용  
 
 		#region Constructor
-		public MainPage(DataManger _dm)
+		public MainPage(DataManger dm)
 		{
 			InitializeComponent();
-			dm = _dm;
-			dm.InitDataBase();
+			_dm = dm;
+			_dm.InitDataBase();
 		}
 		#endregion
 
@@ -34,20 +34,18 @@ namespace MakeNews
 			DgvReLoad();
 		}
 		#endregion
-
-		// TODO : Btn_Setting_Click Event 추가 필요
+		 
 		#region Setting Button Event
 		private void Btn_Setting_Click(object sender, EventArgs e)
 		{
-			SettingPage form = new SettingPage(dm);
+			SettingPage form = new SettingPage();
 			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
-
 			form.ShowDialog();
 
 		}
 		private void Bt_Setting_Click(object sender, EventArgs e)
 		{
-			FixTextSttingPage form = new FixTextSttingPage(dm);
+			FixTextSttingPage form = new FixTextSttingPage(_dm);
 			form.ShowDialog();
 		}
 		#endregion
@@ -55,7 +53,7 @@ namespace MakeNews
 		#region Item Button Event
 		private void Bt_AddData_Click(object sender, EventArgs e)
 		{
-			AddItemPage form = new AddItemPage(dm,"Add Item");
+			AddItemPage form = new AddItemPage(_dm,"Add Item");
 			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
 
 			form.ShowDialog();
@@ -134,7 +132,7 @@ namespace MakeNews
 				return;
 			}
 
-			AddItemPage form = new AddItemPage(dm,"Change Item",writing);
+			AddItemPage form = new AddItemPage(_dm,"Change Item",writing);
 			form.FormClosed += new FormClosedEventHandler(MainPage_Load);
 
 			form.ShowDialog();
@@ -146,9 +144,9 @@ namespace MakeNews
 				int rowIndex = Dgv_History.CurrentRow.Index;
 				if ((bool)Dgv_History.Rows[rowIndex].Cells[2].Value) //팝업일경우
 				{
-					if (dm.SelectCountSession(2) < 2)
+					if (_dm.SelectCountSession(2) < 2)
 					{
-						dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
+						_dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
 						DgvReLoad();
 					}
 					else 
@@ -159,9 +157,9 @@ namespace MakeNews
 				}
 				else 
 				{
-					if (dm.SelectCountSession(1) < 5)
+					if (_dm.SelectCountSession(1) < 5)
 					{
-						dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
+						_dm.UpdateSession((int)Dgv_History.Rows[rowIndex].Cells[0].Value, 3, (bool)Dgv_History.Rows[rowIndex].Cells[2].Value);
 						DgvReLoad();
 					}
 					else
@@ -180,13 +178,13 @@ namespace MakeNews
 			if (Dgv_index_New.SelectedRows.Count == 1) // 로우 선택 확인
 			{
 				int rowIndex = Dgv_index_New.CurrentRow.Index;
-				dm.UpdateSession((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value,1,false);
+				_dm.UpdateSession((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value,1,false);
 				DgvReLoad();
 			}
 			else if (Dgv_index_Info.SelectedRows.Count == 1)
 			{
 				int rowIndex = Dgv_index_Info.CurrentRow.Index;
-				dm.UpdateSession((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value, 2, false);
+				_dm.UpdateSession((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value, 2, false);
 				DgvReLoad();
 			}
 			else
@@ -195,13 +193,11 @@ namespace MakeNews
 			}
 		}
 		#endregion
-
-		// TODO : Bt_OpenHtml_Click: 경로수정 로직 필요
-		// TODO : btn_CopyHtml_Click: 경로수정 로직 필요
+		 
 		#region HTML Button Event
 		private void Bt_CreatHtml_Click(object sender, EventArgs e)
 		{
-			dm.CreateHtml(news,info,history);
+			_dm.CreateHtml(news,info,history);
 			MessageBox.Show("Complete");
 		}
 		private void Bt_OpenHtml_Click(object sender, EventArgs e)
@@ -210,16 +206,18 @@ namespace MakeNews
 
 			if (File.Exists(Common.indexPath))
 			{
-				System.Diagnostics.Process.Start(Common.indexPath);
+				File.Copy(Common.indexPath, Properties.Settings.Default.copyFoderPath + @"\Index.html", true);
+				System.Diagnostics.Process.Start(Properties.Settings.Default.copyFoderPath + @"\Index.html");
 			}
 			else
 			{
 				message += "Index.html이 없습니다.\n";
-			}
+			} 
 
 			if (File.Exists(Common.historyPath))
 			{
-				System.Diagnostics.Process.Start(Common.historyPath);
+				File.Copy(Common.historyPath, Properties.Settings.Default.copyFoderPath + @"\History.html", true);
+				System.Diagnostics.Process.Start(Properties.Settings.Default.copyFoderPath + @"\History.html");
 			}
 			else
 			{
@@ -231,7 +229,32 @@ namespace MakeNews
 				MessageBox.Show(message);
 			}
 
-		} 
+		}
+		#endregion
+		
+		#region Export Excel
+		private void Btn_export_Click(object sender, EventArgs e)
+		{
+			List<Writing> data = new List<Writing>();
+
+			foreach (Writing item in news)
+			{
+				data.Add(item);
+			}
+			foreach (Writing item in info)
+			{
+				data.Add(item);
+			}
+			foreach (Writing item in history)
+			{
+				data.Add(item);
+			}
+
+			_dm.SaveInfotoCSV(data);
+
+			MessageBox.Show("Complete");
+		}
+
 		#endregion
 
 		#region Data Grid View Cell Event
@@ -247,7 +270,7 @@ namespace MakeNews
 				if (result == DialogResult.OK) 
 				{
 					int rowIndex = Dgv_index_Info.CurrentRow.Index;
-					dm.DeleteInfo((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value);
+					_dm.DeleteInfo((int)Dgv_index_Info.Rows[rowIndex].Cells[0].Value);
 					DgvReLoad();
 				}
 			}
@@ -265,7 +288,7 @@ namespace MakeNews
 				if (result == DialogResult.OK)
 				{
 					int rowIndex = Dgv_index_New.CurrentRow.Index;
-					dm.DeleteInfo((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value);
+					_dm.DeleteInfo((int)Dgv_index_New.Rows[rowIndex].Cells[0].Value);
 					DgvReLoad();
 				}
 			}
@@ -282,7 +305,7 @@ namespace MakeNews
 				if (result == DialogResult.OK)
 				{
 					int rowIndex = Dgv_History.CurrentRow.Index;
-					dm.DeleteInfo((int)Dgv_History.Rows[rowIndex].Cells[0].Value);
+					_dm.DeleteInfo((int)Dgv_History.Rows[rowIndex].Cells[0].Value);
 					DgvReLoad();
 				}
 			}
@@ -307,7 +330,7 @@ namespace MakeNews
 		private void DgvloadData(DataGridView dataGridView, int num)
 		{
 			dataGridView.Columns.Clear();
-			List<Writing> data = dm.SelectData(num);
+			List<Writing> data = _dm.SelectData(num);
 
 			switch (num)
 			{
@@ -318,9 +341,11 @@ namespace MakeNews
 					break;
 			}
 
-			DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn();
-			buttonColumn.HeaderText = "Delete";
-			buttonColumn.Name = "Delete";
+			DataGridViewButtonColumn buttonColumn = new DataGridViewButtonColumn
+			{
+				HeaderText = "Delete",
+				Name = "Delete"
+			};
 
 			dataGridView.Columns.Add("c0", "Index");
 			dataGridView.Columns.Add("c1", "Img Use");
@@ -353,7 +378,8 @@ namespace MakeNews
 			date[2] = int.Parse(dateArray[2]);
 			return date;
 		}
+
 		#endregion
-		
+
 	}
 }

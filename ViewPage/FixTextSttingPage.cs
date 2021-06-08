@@ -32,7 +32,7 @@ namespace MakeNews
 			FixText text = new FixText(Tb_IndexHeadTitile.Text,Tb_IndexCoverPTag.Text,Tb_IndexCopy.Text,Tb_HistoryTitle.Text,Tb_Lst_wrapH2.Text);
 			_dm.SetFixTextForXML(text);
 			
-			if (true)//setting
+			if (Properties.Settings.Default.fixPageClose)//setting
 			{
 				this.Close();
 			} 

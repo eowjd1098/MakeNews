@@ -46,7 +46,7 @@
 		public override string ToString()
 		{
 			return Imge.ToString() + "," + Popup.ToString() + "," + Emogi + "," + Title + "," +
-			Contents + "," + Url + "," + Imgsrc + "," + Category + "," + Year + "-" + Month + "-" + Day + "," + Popuptitile + "," +
+			Contents + "," + Url + "," + Imgsrc + "," + Category + "," + Year + "/" + Month + "/" + Day + "," + Popuptitile + "," +
 			PopupImgSrc + "," + PopupContent; ;
 		}
 		public string GetDate() 

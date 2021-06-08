@@ -13,7 +13,7 @@ namespace MakeNews
 {
 	public class DataManger
 	{
-		Common _com =new Common();
+		readonly Common _com =new Common();
 
 		#region Single Tone Pattern
 		private static DataManger instance;
@@ -33,39 +33,50 @@ namespace MakeNews
 			FixText text = new FixText();
 			if (!File.Exists(Common.fixdataPath))
 			{
-				using (File.Create(Common.fixdataPath)) { }
+				File.Create(Common.fixdataPath);
 				return new FixText("","","","","");
 			}
-			XmlDocument doc = new XmlDocument();
 
-			doc.Load(Common.fixdataPath);
-
-			foreach (XmlNode item in doc.ChildNodes)
+			try
 			{
-				foreach (XmlNode xmlNode in item)
+				XmlDocument doc = new XmlDocument();
+				doc.Load(Common.fixdataPath);
+
+				foreach (XmlNode item in doc.ChildNodes)
 				{
-					if (xmlNode.Name == "IndexHead")
+					foreach (XmlNode xmlNode in item)
 					{
-						text.IndexHead = xmlNode.InnerText;
-					}
-					else if (xmlNode.Name == "IndexCoverP") 
-					{
-						text.IndexCoverP = xmlNode.InnerText;
-					}
-					else if (xmlNode.Name == "IndexCopy")
-					{
-						text.IndexCopy = xmlNode.InnerText;
-					}
-					else if (xmlNode.Name == "HistoryHead")
-					{
-						text.HistoryHead = xmlNode.InnerText;
-					}
-					else if (xmlNode.Name == "HistoryH2")
-					{
-						text.HistoryH2 = xmlNode.InnerText;
+						if (xmlNode.Name == "IndexHead")
+						{
+							text.IndexHead = xmlNode.InnerText;
+						}
+						else if (xmlNode.Name == "IndexCoverP")
+						{
+							text.IndexCoverP = xmlNode.InnerText;
+						}
+						else if (xmlNode.Name == "IndexCopy")
+						{
+							text.IndexCopy = xmlNode.InnerText;
+						}
+						else if (xmlNode.Name == "HistoryHead")
+						{
+							text.HistoryHead = xmlNode.InnerText;
+						}
+						else if (xmlNode.Name == "HistoryH2")
+						{
+							text.HistoryH2 = xmlNode.InnerText;
+						}
 					}
 				}
 			}
+			catch (System.Exception)
+			{
+				File.Delete(Common.fixdataPath);
+				File.Create(Common.fixdataPath);
+				return new FixText("", "", "", "", "");
+				throw;
+			}
+			
 			return text;
 		}
 		public void SetFixTextForXML(FixText text) 
@@ -188,7 +199,7 @@ namespace MakeNews
 					using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
 					{
 						conn.Open();
-						sql = "SELECT Num FROM Data WHERE Session = 1 ORDER BY Num ASC LIMIT 1";
+						sql = "SELECT Num FROM Data WHERE Session = 2 ORDER BY Num ASC LIMIT 1";
 						command = new SQLiteCommand(sql, conn);
 						int key = (int)((long)command.ExecuteScalar());
 					 
@@ -225,35 +236,7 @@ namespace MakeNews
 			}
 			 
 		}
-		//public void InsertInfo(Writing writing)
-		//{
-		//	int session = -1;
-		//	
-		//	if (writing.Popup.Equals(false)) //팝업이없음 = 뉴스 일경우
-		//	{
-		//		session = 1;
-		//	}
-		//	else //팝업이있음 = 정보 일경우
-		//	{
-		//		session = 2;
-		//	}
-		//
-		//	using (SQLiteConnection conn = new SQLiteConnection(Common.DBDataPath))
-		//	{
-		//		conn.Open();
-		//		string sql = @"INSERT INTO Data (Session,ImgUse,PopupUse,Emogi,Title,Contents,Url,ImgUrl,Category,Date,PopupTitle,PopupImgSrc,PopupContent) 
-		//					VALUES (" + session + "," + writing.Imge + "," + writing.Popup + ",'" + writing.Emogi + "','" + writing.Title + "','" + writing.Contents + "','" + writing.Url + "','" + writing.Imgsrc + "','" + writing.Category + "','" + writing.GetDate() + "','"
-		//					+ writing.Popuptitile + "','" + writing.PopupImgSrc + "','" + writing.PopupContent + "')";
-		//		SQLiteCommand command = new SQLiteCommand(sql, conn);
-		//		int result = command.ExecuteNonQuery();
-		//		conn.Close();
-		//
-		//		if (result < 0)
-		//		{
-		//			System.Windows.Forms.MessageBox.Show("Err: Count Qurey Fail - Insert");
-		//		}
-		//	}
-		//}
+		 
 		public void UpdateInfo(Writing writing,int beforeSession) 
 		{
 			int ChangeSession = 3;
@@ -422,11 +405,6 @@ namespace MakeNews
 			return (int)read;
 		}
 
-		public void ResetDataBase()
-		{
-
-		}
-
 		#region ect funtion
 		public bool ChangeBoolean(long dbdata) 
 		{
@@ -449,25 +427,20 @@ namespace MakeNews
 		#endregion
 
 		#region CSV 관리
-		public void SaveInfotoCSV(string path, Writing writing)
+		public void SaveInfotoCSV(List<Writing> writing)
 		{
-			if (!File.Exists(path))
+			if (!File.Exists(Common.exportCsvPath))
 			{
-				using (File.Create(path)) { }
+				using (File.Create(Common.exportCsvPath)) { }
 			}
 
-			string[] lines = File.ReadAllLines(path);
-
-			using (StreamWriter sw = new StreamWriter(path, false))
+			using (StreamWriter sw = new StreamWriter(Common.exportCsvPath, false))
 			{
-				sw.WriteLine(writing.ToString());
-				foreach (string data in lines)
+				foreach (Writing item in writing)
 				{
-					if (data != null)
-					{
-						sw.WriteLine("{0}", data);
-					}
+					sw.WriteLine(item.ToString());
 				}
+				
 			}
 		}
 		#endregion

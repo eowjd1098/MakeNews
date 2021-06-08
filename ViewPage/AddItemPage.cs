@@ -23,7 +23,6 @@ namespace MakeNews
 			Tb_PoupImgPath.Enabled = false;
 			Bt_CopyContent.Enabled = false;
 		}
-
 		public AddItemPage(DataManger dm, string btntext, Writing writing)
 		{
 			InitializeComponent();
@@ -145,10 +144,21 @@ namespace MakeNews
 			{
 				MessageBox.Show("Error Form");
 			}
-			if (true) 
+
+			if (Bt_Change.Text == "Change Item")
 			{
-				this.Close();
+				if (Properties.Settings.Default.changePageClose)
+				{
+					this.Close();
+				}
 			}
+			else 
+			{
+				if (Properties.Settings.Default.addPageClose)
+				{
+					this.Close();
+				}
+			} 
 			MessageBox.Show("Complete");
 		}
 		private void Bt_Cancel_Click(object sender, EventArgs e)
