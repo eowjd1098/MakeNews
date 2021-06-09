@@ -39,26 +39,26 @@ namespace MakeNews
 			this.Rb_Change_Close = new System.Windows.Forms.RadioButton();
 			this.Rb_Change_Noting = new System.Windows.Forms.RadioButton();
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.label4 = new System.Windows.Forms.Label();
-			this.label3 = new System.Windows.Forms.Label();
-			this.label2 = new System.Windows.Forms.Label();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
-			this.panel1 = new System.Windows.Forms.Panel();
-			this.panel2 = new System.Windows.Forms.Panel();
-			this.panel3 = new System.Windows.Forms.Panel();
-			this.panel4 = new System.Windows.Forms.Panel();
 			this.panel5 = new System.Windows.Forms.Panel();
+			this.label4 = new System.Windows.Forms.Label();
+			this.panel1 = new System.Windows.Forms.Panel();
+			this.panel4 = new System.Windows.Forms.Panel();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.label2 = new System.Windows.Forms.Label();
+			this.panel3 = new System.Windows.Forms.Panel();
+			this.label3 = new System.Windows.Forms.Label();
+			this.groupBox2 = new System.Windows.Forms.GroupBox();
 			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.panel5.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.panel3.SuspendLayout();
-			this.panel5.SuspendLayout();
+			this.groupBox2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// Bt_Cancel
 			// 
 			this.Bt_Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.Bt_Cancel.Location = new System.Drawing.Point(396, 429);
+			this.Bt_Cancel.Location = new System.Drawing.Point(399, 193);
 			this.Bt_Cancel.Name = "Bt_Cancel";
 			this.Bt_Cancel.Size = new System.Drawing.Size(80, 49);
 			this.Bt_Cancel.TabIndex = 19;
@@ -68,7 +68,7 @@ namespace MakeNews
 			// 
 			// Bt_Change
 			// 
-			this.Bt_Change.Location = new System.Drawing.Point(310, 429);
+			this.Bt_Change.Location = new System.Drawing.Point(313, 193);
 			this.Bt_Change.Name = "Bt_Change";
 			this.Bt_Change.Size = new System.Drawing.Size(80, 49);
 			this.Bt_Change.TabIndex = 18;
@@ -168,6 +168,16 @@ namespace MakeNews
 			this.groupBox1.TabStop = false;
 			this.groupBox1.Text = "Page Closeing";
 			// 
+			// panel5
+			// 
+			this.panel5.Controls.Add(this.label4);
+			this.panel5.Controls.Add(this.Rb_Change_Close);
+			this.panel5.Controls.Add(this.Rb_Change_Noting);
+			this.panel5.Location = new System.Drawing.Point(0, 78);
+			this.panel5.Name = "panel5";
+			this.panel5.Size = new System.Drawing.Size(343, 29);
+			this.panel5.TabIndex = 33;
+			// 
 			// label4
 			// 
 			this.label4.AutoSize = true;
@@ -176,34 +186,6 @@ namespace MakeNews
 			this.label4.Size = new System.Drawing.Size(110, 12);
 			this.label4.TabIndex = 30;
 			this.label4.Text = "Change Item Page";
-			// 
-			// label3
-			// 
-			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(14, 8);
-			this.label3.Name = "label3";
-			this.label3.Size = new System.Drawing.Size(88, 12);
-			this.label3.TabIndex = 29;
-			this.label3.Text = "Add Item Page";
-			// 
-			// label2
-			// 
-			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(14, 8);
-			this.label2.Name = "label2";
-			this.label2.Size = new System.Drawing.Size(84, 12);
-			this.label2.TabIndex = 28;
-			this.label2.Text = "Fix Text Page";
-			// 
-			// groupBox2
-			// 
-			this.groupBox2.Controls.Add(this.Btn_SelectPath);
-			this.groupBox2.Location = new System.Drawing.Point(12, 12);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(462, 57);
-			this.groupBox2.TabIndex = 29;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Copy Forder Link";
 			// 
 			// panel1
 			// 
@@ -217,12 +199,28 @@ namespace MakeNews
 			this.panel1.Size = new System.Drawing.Size(343, 29);
 			this.panel1.TabIndex = 30;
 			// 
+			// panel4
+			// 
+			this.panel4.Location = new System.Drawing.Point(3, 32);
+			this.panel4.Name = "panel4";
+			this.panel4.Size = new System.Drawing.Size(343, 29);
+			this.panel4.TabIndex = 33;
+			// 
 			// panel2
 			// 
 			this.panel2.Location = new System.Drawing.Point(0, 35);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(343, 29);
 			this.panel2.TabIndex = 31;
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(14, 8);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(84, 12);
+			this.label2.TabIndex = 28;
+			this.label2.Text = "Fix Text Page";
 			// 
 			// panel3
 			// 
@@ -234,22 +232,24 @@ namespace MakeNews
 			this.panel3.Size = new System.Drawing.Size(343, 29);
 			this.panel3.TabIndex = 32;
 			// 
-			// panel4
+			// label3
 			// 
-			this.panel4.Location = new System.Drawing.Point(3, 32);
-			this.panel4.Name = "panel4";
-			this.panel4.Size = new System.Drawing.Size(343, 29);
-			this.panel4.TabIndex = 33;
+			this.label3.AutoSize = true;
+			this.label3.Location = new System.Drawing.Point(14, 8);
+			this.label3.Name = "label3";
+			this.label3.Size = new System.Drawing.Size(88, 12);
+			this.label3.TabIndex = 29;
+			this.label3.Text = "Add Item Page";
 			// 
-			// panel5
+			// groupBox2
 			// 
-			this.panel5.Controls.Add(this.label4);
-			this.panel5.Controls.Add(this.Rb_Change_Close);
-			this.panel5.Controls.Add(this.Rb_Change_Noting);
-			this.panel5.Location = new System.Drawing.Point(0, 78);
-			this.panel5.Name = "panel5";
-			this.panel5.Size = new System.Drawing.Size(343, 29);
-			this.panel5.TabIndex = 33;
+			this.groupBox2.Controls.Add(this.Btn_SelectPath);
+			this.groupBox2.Location = new System.Drawing.Point(12, 12);
+			this.groupBox2.Name = "groupBox2";
+			this.groupBox2.Size = new System.Drawing.Size(462, 57);
+			this.groupBox2.TabIndex = 29;
+			this.groupBox2.TabStop = false;
+			this.groupBox2.Text = "Copy Forder Link";
 			// 
 			// SettingPage
 			// 
@@ -257,7 +257,7 @@ namespace MakeNews
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
 			this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.CancelButton = this.Bt_Cancel;
-			this.ClientSize = new System.Drawing.Size(487, 524);
+			this.ClientSize = new System.Drawing.Size(487, 249);
 			this.ControlBox = false;
 			this.Controls.Add(this.groupBox2);
 			this.Controls.Add(this.groupBox1);
@@ -271,13 +271,13 @@ namespace MakeNews
 			this.TopMost = true;
 			this.Load += new System.EventHandler(this.SettingPage_Load);
 			this.groupBox1.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
+			this.panel5.ResumeLayout(false);
+			this.panel5.PerformLayout();
 			this.panel1.ResumeLayout(false);
 			this.panel1.PerformLayout();
 			this.panel3.ResumeLayout(false);
 			this.panel3.PerformLayout();
-			this.panel5.ResumeLayout(false);
-			this.panel5.PerformLayout();
+			this.groupBox2.ResumeLayout(false);
 			this.ResumeLayout(false);
 
 		}
